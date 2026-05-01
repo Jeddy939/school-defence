@@ -5,6 +5,7 @@ import { GameEngine } from '../game/GameEngine';
 interface Props {
   state: GameState;
   engine: GameEngine;
+  isTouchMode?: boolean;
   onOpenBriefing: () => void;
   suppressPauseMenu?: boolean;
 }
@@ -14,7 +15,7 @@ interface WaveBannerState {
   subtitle: string;
 }
 
-export const GameOverlay: React.FC<Props> = ({ state, engine, onOpenBriefing, suppressPauseMenu = false }) => {
+export const GameOverlay: React.FC<Props> = ({ state, engine, isTouchMode = false, onOpenBriefing, suppressPauseMenu = false }) => {
   const [saveLabel, setSaveLabel] = useState('SAVE');
   const [activeTab, setActiveTab] = useState<'MENU' | 'OPTIONS'>('MENU');
   const [waveBanner, setWaveBanner] = useState<WaveBannerState | null>(null);
@@ -124,7 +125,9 @@ export const GameOverlay: React.FC<Props> = ({ state, engine, onOpenBriefing, su
                       </div>
                     </label>
                     <p className="mt-2 text-[10px] leading-tight text-slate-500">
-                      Move the camera by pushing the mouse to the edge of the canvas.
+                      {isTouchMode
+                        ? 'Touch mode uses drag panning on the playfield. Edge panning is mainly for desktop mouse control.'
+                        : 'Move the camera by pushing the mouse to the edge of the canvas.'}
                     </p>
                   </div>
                 </div>
@@ -165,7 +168,10 @@ export const GameOverlay: React.FC<Props> = ({ state, engine, onOpenBriefing, su
             <div className="rts-top-warning">Incoming wave in {Math.ceil(state.nextWaveTime)}s</div>
           )}
           {engine.pendingBuild && (
-            <div className="rts-top-warning is-build">Click to place structure</div>
+            <div className="rts-top-warning is-build">{isTouchMode ? 'Tap to place structure' : 'Click to place structure'}</div>
+          )}
+          {isTouchMode && (
+            <div className="rts-top-warning is-touch-hint">Tap select · double tap command</div>
           )}
           <button onClick={() => engine.centerViewOnStaffroom()} className="rts-top-button">Center</button>
           <button onClick={onOpenBriefing} className="rts-top-button">Briefing</button>

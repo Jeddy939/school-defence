@@ -1760,6 +1760,31 @@ export class GameEngine {
       }
   }
 
+  selectAtScreenPos(sx: number, sy: number, clearEmpty = true) {
+      this.mousePos = { x: sx, y: sy };
+
+      if (this.pendingBuild) {
+          const worldPos = this.screenToWorld(sx, sy);
+          this.tryBuild(worldPos.x, worldPos.y);
+          return;
+      }
+
+      const clicked = this.findTargetAtScreenPos(sx, sy, true);
+      if (clicked && clicked.faction !== Faction.STUDENTS) {
+          this.selectedIds = [clicked.id];
+      } else if (clearEmpty) {
+          this.selectedIds = [];
+      }
+      this.notifyState();
+  }
+
+  commandAtScreenPos(sx: number, sy: number) {
+      this.mousePos = { x: sx, y: sy };
+      const worldPos = this.screenToWorld(sx, sy);
+      const screenTarget = this.findTargetAtScreenPos(sx, sy);
+      this.issueCommand(worldPos.x, worldPos.y, screenTarget?.id);
+  }
+
   handleWheel(deltaY: number, mx: number, my: number) {
       // Zoom Logic
       // 1. Get world position under mouse BEFORE zoom

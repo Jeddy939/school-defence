@@ -17,6 +17,11 @@ const difficultyDescriptions: Record<Difficulty, string> = {
 
 const SPRITE_DEBUG_LAUNCH_KEY = 'schoolyard_allow_sprite_debug';
 
+const detectTouchMode = () =>
+  window.matchMedia('(pointer: coarse)').matches ||
+  window.matchMedia('(hover: none)').matches ||
+  navigator.maxTouchPoints > 0;
+
 export default function App() {
   const engineRef = useRef<GameEngine>(new GameEngine());
   const [gameState, setGameState] = useState<GameState>(engineRef.current.state);
@@ -25,6 +30,7 @@ export default function App() {
   const [hasSave, setHasSave] = useState(false);
   const [showDifficulty, setShowDifficulty] = useState(false);
   const [showBriefing, setShowBriefing] = useState(false);
+  const [isTouchMode, setIsTouchMode] = useState(detectTouchMode);
   const requestedSpriteDebugMode = new URLSearchParams(window.location.search).has('spriteDebug');
   const [spriteDebugAuthorized] = useState(() => {
     const debugLaunchExpires = Number(sessionStorage.getItem(SPRITE_DEBUG_LAUNCH_KEY) || 0);
@@ -53,6 +59,22 @@ export default function App() {
     // Check for save
     setHasSave(engineRef.current.hasSave());
 
+  }, []);
+
+  useEffect(() => {
+    const pointerQuery = window.matchMedia('(pointer: coarse)');
+    const hoverQuery = window.matchMedia('(hover: none)');
+    const updateTouchMode = () => setIsTouchMode(detectTouchMode());
+
+    pointerQuery.addEventListener('change', updateTouchMode);
+    hoverQuery.addEventListener('change', updateTouchMode);
+    window.addEventListener('resize', updateTouchMode);
+
+    return () => {
+      pointerQuery.removeEventListener('change', updateTouchMode);
+      hoverQuery.removeEventListener('change', updateTouchMode);
+      window.removeEventListener('resize', updateTouchMode);
+    };
   }, []);
 
   useEffect(() => {
@@ -133,6 +155,10 @@ export default function App() {
     return <SpriteDebugLab />;
   }
 
+  const commandBriefText = isTouchMode
+    ? 'Touch controls are tuned for mobile: tap a staff member or building to select it, double tap the schoolyard to move or command, drag the field to pan, and use the Center button to snap back to the staffroom.'
+    : 'Faculty units are controlled like a classic RTS: left click to select, right click to issue orders, middle mouse to pan, and the wheel to zoom around the school grounds.';
+
   if (!gameStarted) {
     return (
       <div className="relative min-h-screen overflow-hidden px-4 py-8 sm:px-6 lg:px-10">
@@ -169,7 +195,7 @@ export default function App() {
                     Command Brief
                   </div>
                   <p className="mt-3 max-w-lg text-sm leading-6 text-slate-300">
-                    Faculty units are controlled like a classic RTS: left click to select, right click to issue orders, middle mouse to pan, and the wheel to zoom around the school grounds.
+                    {commandBriefText}
                   </p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-slate-950/55 px-4 py-3 text-right shadow-lg">
@@ -260,14 +286,15 @@ export default function App() {
   }
 
   return (
-    <div className="game-screen">
+    <div className={`game-screen ${isTouchMode ? 'is-touch-mode' : 'is-pointer-mode'}`}>
       <main className="game-playfield">
         <div className="stage-shell rts-stage">
           <div className="game-viewport">
-            <GameCanvas engine={engineRef.current} />
+            <GameCanvas engine={engineRef.current} inputMode={isTouchMode ? 'touch' : 'mouse'} />
             <GameOverlay
               state={gameState}
               engine={engineRef.current}
+              isTouchMode={isTouchMode}
               suppressPauseMenu={showBriefing || !!newDiscovery}
               onOpenBriefing={() => {
                 setShowBriefing(true);
@@ -300,6 +327,7 @@ export default function App() {
 
       {showBriefing && !newDiscovery && (
         <MissionBriefing
+          isTouchMode={isTouchMode}
           onClose={handleCloseBriefing}
           onCenterView={() => engineRef.current.centerViewOnStaffroom()}
         />
