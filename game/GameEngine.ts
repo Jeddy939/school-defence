@@ -1431,6 +1431,11 @@ export class GameEngine {
              ent.state === UnitState.BUILD;
   }
 
+  private isResourceRunner(ent: Entity) {
+      return ent.type === EntityType.TEACHER_AIDE &&
+             (ent.state === UnitState.GATHER_GO || ent.state === UnitState.GATHER_RETURN);
+  }
+
   private clampToMap(pos: Vector2): Vector2 {
       const margin = 8;
       return {
@@ -1474,6 +1479,7 @@ export class GameEngine {
       if (mover.id === other.id || other.hp <= 0 || other.isHidden) return false;
       if (ignoredObstacleId !== undefined && other.id === ignoredObstacleId) return false;
       if (other.id === mover.targetId) return false;
+      if (this.isResourceRunner(mover) && other.type === EntityType.TREE) return false;
       return other.faction === Faction.NEUTRAL || this.isBuilding(other.type);
   }
 
@@ -1497,6 +1503,7 @@ export class GameEngine {
           if (ignoredObstacleId !== undefined && other.id === ignoredObstacleId) return;
           const isObstacle = this.isPathObstacle(ent, other, ignoredObstacleId);
           const isMobile = this.isMobileUnit(other);
+          if (this.isResourceRunner(ent) && isMobile) return;
           if (!isObstacle && !isMobile) return;
 
           const dx = ent.pos.x - other.pos.x;
@@ -1574,6 +1581,7 @@ export class GameEngine {
           for (let j = i + 1; j < mobiles.length; j++) {
               const a = mobiles[i];
               const b = mobiles[j];
+              if (this.isResourceRunner(a) || this.isResourceRunner(b)) continue;
               const isCombatPair = a.targetId === b.id || b.targetId === a.id;
               const minDist = (this.getMobileSeparationRadius(a) + this.getMobileSeparationRadius(b) + 3) * (isCombatPair ? 0.45 : 1);
               const dx = b.pos.x - a.pos.x;
@@ -1910,6 +1918,10 @@ export class GameEngine {
               ent.targetId = null;
           }
       });
+
+      if (selectedUnits.length > 0) {
+          this.notifyState();
+      }
   }
 
   tryBuild(wx: number, wy: number) {

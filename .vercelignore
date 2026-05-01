@@ -1,0 +1,9 @@
+.git/
+node_modules/
+dist/
+generated/
+.playwright-mcp/
+test-artifacts/
+.env*
+/*.png
+*.log

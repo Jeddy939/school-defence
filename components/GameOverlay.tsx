@@ -2,10 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import { GameState } from '../types';
 import { GameEngine } from '../game/GameEngine';
 
+type ControlMode = 'auto' | 'mouse' | 'touch';
+
 interface Props {
   state: GameState;
   engine: GameEngine;
   isTouchMode?: boolean;
+  controlMode: ControlMode;
+  detectedTouchMode: boolean;
+  onControlModeChange: (mode: ControlMode) => void;
   onOpenBriefing: () => void;
   suppressPauseMenu?: boolean;
 }
@@ -15,7 +20,16 @@ interface WaveBannerState {
   subtitle: string;
 }
 
-export const GameOverlay: React.FC<Props> = ({ state, engine, isTouchMode = false, onOpenBriefing, suppressPauseMenu = false }) => {
+export const GameOverlay: React.FC<Props> = ({
+  state,
+  engine,
+  isTouchMode = false,
+  controlMode,
+  detectedTouchMode,
+  onControlModeChange,
+  onOpenBriefing,
+  suppressPauseMenu = false
+}) => {
   const [saveLabel, setSaveLabel] = useState('SAVE');
   const [activeTab, setActiveTab] = useState<'MENU' | 'OPTIONS'>('MENU');
   const [waveBanner, setWaveBanner] = useState<WaveBannerState | null>(null);
@@ -23,6 +37,16 @@ export const GameOverlay: React.FC<Props> = ({ state, engine, isTouchMode = fals
 
   const isPaused = engine.paused;
   const incomingWave = !isPaused && state.nextWaveTime <= 10 && state.nextWaveTime > 0;
+  const controlLabel =
+    controlMode === 'auto'
+      ? `Auto ${isTouchMode ? 'Touch' : 'Click'}`
+      : controlMode === 'touch'
+        ? 'Touch'
+        : 'Click';
+
+  const handleQuickControlToggle = () => {
+    onControlModeChange(isTouchMode ? 'mouse' : 'touch');
+  };
 
   useEffect(() => {
     if (state.wave > previousWaveRef.current) {
@@ -112,6 +136,30 @@ export const GameOverlay: React.FC<Props> = ({ state, engine, isTouchMode = fals
               {activeTab === 'OPTIONS' && (
                 <div className="flex flex-col gap-4">
                   <div className="rounded border border-slate-700 bg-slate-900 p-4">
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                      <span className="font-bold text-slate-300">Controls</span>
+                      <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">
+                        Auto: {detectedTouchMode ? 'Touch' : 'Click'}
+                      </span>
+                    </div>
+                    <div className="control-mode-grid">
+                      {(['auto', 'mouse', 'touch'] as ControlMode[]).map((mode) => (
+                        <button
+                          key={mode}
+                          type="button"
+                          onClick={() => onControlModeChange(mode)}
+                          className={controlMode === mode ? 'control-mode-button is-active' : 'control-mode-button'}
+                        >
+                          {mode === 'mouse' ? 'Click' : mode === 'touch' ? 'Touch' : 'Auto'}
+                        </button>
+                      ))}
+                    </div>
+                    <p className="mt-2 text-[10px] leading-tight text-slate-500">
+                      Click mode uses left and right mouse controls. Touch mode shows tap and double-tap prompts.
+                    </p>
+                  </div>
+
+                  <div className="rounded border border-slate-700 bg-slate-900 p-4">
                     <label className="group flex cursor-pointer items-center justify-between">
                       <span className="font-bold text-slate-300 transition-colors group-hover:text-white">Edge Panning</span>
                       <div className="relative inline-flex cursor-pointer items-center">
@@ -171,8 +219,9 @@ export const GameOverlay: React.FC<Props> = ({ state, engine, isTouchMode = fals
             <div className="rts-top-warning is-build">{isTouchMode ? 'Tap to place structure' : 'Click to place structure'}</div>
           )}
           {isTouchMode && (
-            <div className="rts-top-warning is-touch-hint">Tap select · double tap command</div>
+            <div className="rts-top-warning is-touch-hint">Tap select - double tap command</div>
           )}
+          <button onClick={handleQuickControlToggle} className="rts-top-button">Controls: {controlLabel}</button>
           <button onClick={() => engine.centerViewOnStaffroom()} className="rts-top-button">Center</button>
           <button onClick={onOpenBriefing} className="rts-top-button">Briefing</button>
           <button onClick={() => engine.togglePause()} className="rts-top-button">{isPaused ? 'Resume' : 'Pause'}</button>

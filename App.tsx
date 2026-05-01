@@ -16,11 +16,30 @@ const difficultyDescriptions: Record<Difficulty, string> = {
 };
 
 const SPRITE_DEBUG_LAUNCH_KEY = 'schoolyard_allow_sprite_debug';
+const CONTROL_MODE_KEY = 'schoolyard_control_mode';
 
-const detectTouchMode = () =>
-  window.matchMedia('(pointer: coarse)').matches ||
-  window.matchMedia('(hover: none)').matches ||
-  navigator.maxTouchPoints > 0;
+type ControlMode = 'auto' | 'mouse' | 'touch';
+
+const isControlMode = (value: string | null): value is ControlMode =>
+  value === 'auto' || value === 'mouse' || value === 'touch';
+
+const getSavedControlMode = (): ControlMode => {
+  const savedMode = localStorage.getItem(CONTROL_MODE_KEY);
+  return isControlMode(savedMode) ? savedMode : 'auto';
+};
+
+const detectTouchMode = () => {
+  const hasCoarsePrimaryPointer = window.matchMedia('(pointer: coarse)').matches;
+  const compactViewport = window.innerWidth <= 720;
+  const tabletViewport = window.innerWidth <= 1024;
+  const hasFinePointer = window.matchMedia('(any-pointer: fine)').matches;
+  const canHover = window.matchMedia('(any-hover: hover)').matches;
+
+  if (compactViewport) return true;
+  if (!tabletViewport) return false;
+
+  return hasCoarsePrimaryPointer && !hasFinePointer && !canHover;
+};
 
 export default function App() {
   const engineRef = useRef<GameEngine>(new GameEngine());
@@ -30,7 +49,8 @@ export default function App() {
   const [hasSave, setHasSave] = useState(false);
   const [showDifficulty, setShowDifficulty] = useState(false);
   const [showBriefing, setShowBriefing] = useState(false);
-  const [isTouchMode, setIsTouchMode] = useState(detectTouchMode);
+  const [detectedTouchMode, setDetectedTouchMode] = useState(detectTouchMode);
+  const [controlMode, setControlMode] = useState<ControlMode>(getSavedControlMode);
   const requestedSpriteDebugMode = new URLSearchParams(window.location.search).has('spriteDebug');
   const [spriteDebugAuthorized] = useState(() => {
     const debugLaunchExpires = Number(sessionStorage.getItem(SPRITE_DEBUG_LAUNCH_KEY) || 0);
@@ -63,19 +83,30 @@ export default function App() {
 
   useEffect(() => {
     const pointerQuery = window.matchMedia('(pointer: coarse)');
+    const anyPointerQuery = window.matchMedia('(any-pointer: fine)');
     const hoverQuery = window.matchMedia('(hover: none)');
-    const updateTouchMode = () => setIsTouchMode(detectTouchMode());
+    const anyHoverQuery = window.matchMedia('(any-hover: hover)');
+    const updateTouchMode = () => setDetectedTouchMode(detectTouchMode());
 
     pointerQuery.addEventListener('change', updateTouchMode);
+    anyPointerQuery.addEventListener('change', updateTouchMode);
     hoverQuery.addEventListener('change', updateTouchMode);
+    anyHoverQuery.addEventListener('change', updateTouchMode);
     window.addEventListener('resize', updateTouchMode);
 
     return () => {
       pointerQuery.removeEventListener('change', updateTouchMode);
+      anyPointerQuery.removeEventListener('change', updateTouchMode);
       hoverQuery.removeEventListener('change', updateTouchMode);
+      anyHoverQuery.removeEventListener('change', updateTouchMode);
       window.removeEventListener('resize', updateTouchMode);
     };
   }, []);
+
+  const handleControlModeChange = (mode: ControlMode) => {
+    setControlMode(mode);
+    localStorage.setItem(CONTROL_MODE_KEY, mode);
+  };
 
   useEffect(() => {
     const blockBrowserMouseNavigation = (event: MouseEvent) => {
@@ -155,6 +186,7 @@ export default function App() {
     return <SpriteDebugLab />;
   }
 
+  const isTouchMode = controlMode === 'auto' ? detectedTouchMode : controlMode === 'touch';
   const commandBriefText = isTouchMode
     ? 'Touch controls are tuned for mobile: tap a staff member or building to select it, double tap the schoolyard to move or command, drag the field to pan, and use the Center button to snap back to the staffroom.'
     : 'Faculty units are controlled like a classic RTS: left click to select, right click to issue orders, middle mouse to pan, and the wheel to zoom around the school grounds.';
@@ -295,6 +327,9 @@ export default function App() {
               state={gameState}
               engine={engineRef.current}
               isTouchMode={isTouchMode}
+              controlMode={controlMode}
+              detectedTouchMode={detectedTouchMode}
+              onControlModeChange={handleControlModeChange}
               suppressPauseMenu={showBriefing || !!newDiscovery}
               onOpenBriefing={() => {
                 setShowBriefing(true);

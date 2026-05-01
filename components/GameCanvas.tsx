@@ -86,7 +86,6 @@ export const GameCanvas: React.FC<Props> = ({ engine, inputMode = 'mouse' }) => 
     });
 
     const handleMouseDown = (e: MouseEvent) => {
-      if (inputMode === 'touch') return;
       if (isBrowserNavigationButton(e.button)) {
         e.preventDefault();
         e.stopPropagation();
@@ -104,13 +103,11 @@ export const GameCanvas: React.FC<Props> = ({ engine, inputMode = 'mouse' }) => 
     };
     
     const handleMouseMove = (e: MouseEvent) => {
-      if (inputMode === 'touch') return;
       const { x, y } = getCanvasCoords(e.clientX, e.clientY);
       engine.handleMouseMove(x, y);
     };
 
     const handleMouseUp = (e: MouseEvent) => {
-      if (inputMode === 'touch') return;
       if (isBrowserNavigationButton(e.button)) {
         e.preventDefault();
         e.stopPropagation();
@@ -127,14 +124,12 @@ export const GameCanvas: React.FC<Props> = ({ engine, inputMode = 'mouse' }) => 
     };
 
     const handleWheel = (e: WheelEvent) => {
-      if (inputMode === 'touch') return;
       e.preventDefault();
       const { x, y } = getCanvasCoords(e.clientX, e.clientY);
       engine.handleWheel(e.deltaY, x, y);
     };
 
     const handleTouchStart = (e: TouchEvent) => {
-      if (inputMode !== 'touch') return;
       e.preventDefault();
       canvas.focus();
       engine.setMouseInsideCanvas(true);
@@ -169,7 +164,6 @@ export const GameCanvas: React.FC<Props> = ({ engine, inputMode = 'mouse' }) => 
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (inputMode !== 'touch') return;
       e.preventDefault();
 
       if (e.touches.length === 2 && lastPinchDistance !== null) {
@@ -208,7 +202,6 @@ export const GameCanvas: React.FC<Props> = ({ engine, inputMode = 'mouse' }) => 
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
-      if (inputMode !== 'touch') return;
       e.preventDefault();
       lastPinchDistance = null;
 
