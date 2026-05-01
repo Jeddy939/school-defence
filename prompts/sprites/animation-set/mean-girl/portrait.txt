@@ -1,0 +1,68 @@
+Create a production-ready 2D pixel-art animated portrait sprite sheet for an isometric RTS game UI.
+
+CHARACTER:
+Mean Girl student ranged support enemy
+- sharp Australian school student
+- neat school uniform with pink accessories
+- perfectly styled hair
+- phone held like a weapon of mass reputation damage
+- small handbag or school bag
+- smug posture
+- expression only visible where appropriate
+- looks like she can ruin your reputation before recess ends
+
+---
+
+PERSONALITY:
+- throws projectiles and slows nearby faculty with toxic gossip
+- phone is a weapon of mass reputation damage
+- expression says: "Everyone already knows."
+
+---
+
+STYLE:
+- pixel-art RTS unit portrait
+- late-90s pre-rendered look
+- crisp readable pixels
+- gothic dark fantasy schoolyard vibe
+- gothic dark fantasy schoolyard vibe with cursed group-chat energy
+- subtle eerie rim light
+- muted school colors with toxic pink highlights
+- comical, expressive, not horror
+- readable at small UI size
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+- no scenery
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  IDLE, GOSSIP, SMIRK
+- 4 columns:
+  animation frames 1, 2, 3, 4
+- consistent head size or portrait mass size
+- centered portrait
+- fixed head and shoulder anchor, or fixed base anchor for machine and boss portraits
+- same scale in every frame
+
+---
+
+ANIMATION:
+- IDLE row: tiny blink, phone glints subtly, hair barely shifts
+- GOSSIP row: mouth movement, phone rises, eyes sharpen with toxic confidence
+- SMIRK row: one eyebrow lifts, smile grows, tiny pink gossip spark near phone
+
+---
+
+OUTPUT:
+- one portrait sprite sheet
+- no text
+- no UI
+- no labels
+- chroma green background only

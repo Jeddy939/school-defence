@@ -1,0 +1,70 @@
+Create a production-ready 2D pixel-art animated portrait sprite sheet for an isometric RTS game UI.
+
+CHARACTER:
+Class Clown student disruptor enemy
+- school student dressed like a troublemaker
+- untucked uniform
+- crooked tie or loose shirt
+- tiny red clown nose where visible
+- messy hair
+- pockets full of prank items
+- holds a blue water bomb
+- theatrical posture
+- looks like disruptive behavior is their love language
+
+---
+
+PERSONALITY:
+- throws water bombs that stun staff
+- disruptive behavior is their love language
+- will do anything for a laugh
+- expression says: "Watch this."
+
+---
+
+STYLE:
+- pixel-art RTS unit portrait
+- late-90s pre-rendered look
+- crisp readable pixels
+- gothic dark fantasy schoolyard vibe
+- gothic dark fantasy schoolyard vibe with cursed assembly-prank energy
+- subtle eerie rim light
+- muted school colors with bright clown-red and water-blue highlights
+- comical, expressive, not horror
+- readable at small UI size
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+- no scenery
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  IDLE, LAUGH, PRANK
+- 4 columns:
+  animation frames 1, 2, 3, 4
+- consistent head size or portrait mass size
+- centered portrait
+- fixed head and shoulder anchor, or fixed base anchor for machine and boss portraits
+- same scale in every frame
+
+---
+
+ANIMATION:
+- IDLE row: tiny grin, blink, clown nose wiggle
+- LAUGH row: mouth opens in silent laugh, shoulders bounce, eyes squint
+- PRANK row: water bomb rises into view, eyes widen with mischief, tiny blue splash sparkle
+
+---
+
+OUTPUT:
+- one portrait sprite sheet
+- no text
+- no UI
+- no labels
+- chroma green background only

@@ -1,0 +1,81 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- NORTH (row 1): full back view, no face visible, oversized backpack fully visible and centered
+- NORTH-EAST (row 2): back-right angle, mostly back visible, slight right turn, no clear face
+- EAST (row 3): full right-side profile, only one eye visible, body sideways, backpack visible behind
+
+If face is visible in NORTH -> incorrect
+If body is not clearly angled in NE -> incorrect
+If EAST looks front-facing -> incorrect
+
+---
+
+CHARACTER:
+Year 7 schoolkid enemy
+- tiny chaotic new student
+- messy brown spiky hair
+- white untucked school shirt
+- navy shorts
+- white socks
+- sneakers
+- oversized olive-green backpack bigger than their torso
+- sugar-fueled posture
+- angry and confused expression only visible where appropriate
+- looks like they have no map, no timetable, and unlimited energy
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- cursed first-day-of-high-school energy
+- muted school-uniform colors with eerie rim highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  NORTH, NORTH-EAST, EAST
+- 3 columns:
+  1. wind-up
+  2. backpack impact
+  3. recovery
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Backpack melee attack
+- frame 1: winds up by twisting with the huge backpack
+- frame 2: swings or bumps with the backpack, tiny impact spark
+- frame 3: wobbly recovery, still angry and confused
+- attack should feel frantic, weak, and numerous
+- no realistic violence
+- effects stay inside the frame
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

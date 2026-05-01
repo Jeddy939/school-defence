@@ -1,0 +1,84 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+This sheet must contain exactly 3 direction rows: NORTH, NORTH-EAST, EAST.
+Do not omit, merge, replace, or relabel any direction.
+
+- NORTH (row 1): full back view, no face visible, back of worn cardigan, lanyard, and lesson folder visible from behind
+- NORTH-EAST (row 2): back-right angle, mostly back visible, slight right turn, no clear face
+- EAST (row 3): full right-side profile, only one eye or profile detail visible, body sideways, rolled lesson folder, clipboard, or emergency DVD case visible in profile
+
+If face is visible in NORTH -> incorrect
+If body is not clearly angled in NE -> incorrect
+If EAST looks front-facing -> incorrect
+
+---
+
+CHARACTER:
+Substitute Teacher faculty basic melee unit
+- exhausted relief teacher who has seen enough
+- worn beige cardigan
+- collared shirt
+- sensible dark pants
+- practical shoes
+- crooked lanyard with too many keys
+- messy hair and tired posture
+- carries a rolled lesson plan folder, clipboard, or emergency DVD case
+- looks like they arrived expecting silent reading and found a classroom uprising
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe with cursed relief-teacher energy
+- muted cardigan and school-office colors with eerie staffroom highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  NORTH, NORTH-EAST, EAST
+- 3 columns:
+  1. wind-up
+  2. impact or release
+  3. recovery
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot or base anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+ATTACK animation
+- rolled-folder melee attack
+- frame 1 raises clipboard or rolled folder with exhausted irritation
+- frame 2 quick close-range swat with a tiny impact spark
+- frame 3 returns to tense ready stance
+- no readable text
+- no UI elements
+- effects must stay inside the frame slots
+
+---
+
+OUTPUT:
+- one sprite sheet
+- exactly 3 direction rows and 3 animation columns
+- no text
+- no UI
+- directions must be correct

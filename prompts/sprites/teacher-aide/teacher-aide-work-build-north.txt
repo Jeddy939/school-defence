@@ -1,0 +1,82 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- NORTH (row 1): full back view, no face visible, back of cardigan fully visible, lanyard and hair only seen from behind
+- NORTH-EAST (row 2): back-right angle, mostly back visible, slight right turn, no clear face
+- EAST (row 3): full right-side profile, only one eye or glasses lens visible, body sideways, tool bag or folder stack visible behind
+
+If face is visible in NORTH -> incorrect
+If body is not clearly angled in NE -> incorrect
+If EAST looks front-facing -> incorrect
+
+---
+
+CHARACTER:
+Teacher's Aide faculty worker unit
+- overworked Australian school teacher's aide
+- tired but determined expression only visible where appropriate
+- practical cardigan, slightly worn and oversized
+- collared shirt
+- dark sensible pants
+- practical shoes
+- lanyard with keys
+- messy tied-back hair or short frazzled hair
+- small satchel or tote bag full of forms, folders, and confiscated items
+- carries a clipboard, folder stack, or small toolbox for building and gathering
+- looks like the only person in the school who knows how to fix the photocopier
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- slightly cursed staffroom energy
+- muted school-uniform colors with eerie highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  NORTH, NORTH-EAST, EAST
+- 3 columns:
+  1. wind-up / prepare tool
+  2. work impact / hammer, stamp, or wrench action
+  3. recovery / return to worker stance
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Worker build/gather action
+- frame 1: raises clipboard, wrench, folder stack, or small repair tool
+- frame 2: performs a quick practical work action with tiny dust or paperwork flick
+- frame 3: returns to tired ready stance
+- action should read as building, repairing, gathering, or fixing school infrastructure
+- no combat weapon
+- no large effects
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

@@ -1,0 +1,84 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+This sheet must contain exactly 3 direction rows: NORTH, NORTH-EAST, EAST.
+Do not omit, merge, replace, or relabel any direction.
+
+- NORTH (row 1): full back view, no face visible, back of cardigan or vest, lanyard, and chalk-dusted sleeves visible
+- NORTH-EAST (row 2): back-right angle, mostly back visible, slight right turn, no clear face
+- EAST (row 3): full right-side profile, only one eye or profile detail visible, body sideways, glasses lens, chalk hand, calculator or ruler visible in profile
+
+If face is visible in NORTH -> incorrect
+If body is not clearly angled in NE -> incorrect
+If EAST looks front-facing -> incorrect
+
+---
+
+CHARACTER:
+Maths Teacher faculty ranged DPS unit
+- precise Australian maths teacher
+- neat but frazzled teacher clothes
+- collared shirt with cardigan or vest
+- sensible pants or skirt
+- glasses
+- lanyard
+- chalk dust on sleeves
+- calculator or ruler clipped to belt
+- holds chalk like a dart
+- looks like they calculate chalk trajectories with terrifying accuracy
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe with cursed geometry-class energy
+- muted classroom colors with eerie chalk-white highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  NORTH, NORTH-EAST, EAST
+- 3 columns:
+  1. idle pose
+  2. subtle motion
+  3. return to idle
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot or base anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+IDLE animation
+- stands perfectly still with stern posture
+- adjusts glasses, taps chalk into one palm, tiny chalk dust motion
+- returns to the same precise ready stance
+- no readable text
+- no UI elements
+- effects must stay inside the frame slots
+
+---
+
+OUTPUT:
+- one sprite sheet
+- exactly 3 direction rows and 3 animation columns
+- no text
+- no UI
+- directions must be correct

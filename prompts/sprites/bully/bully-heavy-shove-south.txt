@@ -1,0 +1,78 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- SOUTH-EAST (row 1): front-right angle, chest partially visible, right shoulder closer to camera, face slightly turned
+- SOUTH (row 2): full front view, both eyes visible, shoulders symmetrical, looming chest-forward posture
+
+If face is not visible in SOUTH -> incorrect
+If SE looks side-on instead of angled -> incorrect
+If SOUTH does not show both eyes -> incorrect
+
+---
+
+CHARACTER:
+The Bully enemy heavy hitter
+- huge older-looking school student
+- stretched school shirt or dark hoodie over uniform
+- dark pants or shorts
+- heavy shoes
+- rough school bag slung low
+- scruffy moustache or stubble
+- broad shoulders and looming posture
+- expression says they own the corridor
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- cursed back-of-the-bike-sheds energy
+- muted school colors with eerie rim highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 2 rows total (top to bottom):
+  SOUTH-EAST, SOUTH
+- 3 columns:
+  1. heavy wind-up
+  2. shove impact
+  3. looming recovery
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Heavy shove melee attack
+- frame 1: pulls one shoulder back and raises a heavy arm
+- frame 2: performs a big shove or bag bump with a compact impact spark
+- frame 3: settles back into a looming stance
+- attack should feel slow, heavy, and intimidating in a cartoon way
+- no realistic violence
+- no weapons
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

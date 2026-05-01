@@ -1,0 +1,68 @@
+Create a production-ready 2D pixel-art animated portrait sprite sheet for an isometric RTS game UI.
+
+CHARACTER:
+Bowling Machine faculty defense tower
+- school cricket bowling machine set to fast bowler mode
+- squat wheeled machine body
+- ball feeder hopper
+- visible spinning wheel or chute
+- taped-on staffroom warning label shape but no readable text
+- bucket of red cricket balls attached or nearby within the sprite
+- looks emotionless, overpowered, and unable to understand pity
+
+---
+
+PERSONALITY:
+- set to fast bowler mode
+- does not understand mercy
+- staffroom-approved defensive equipment with unsafe confidence
+- expression equivalent: blank machine menace
+
+---
+
+STYLE:
+- pixel-art RTS unit portrait
+- late-90s pre-rendered look
+- crisp readable pixels
+- gothic dark fantasy schoolyard vibe
+- gothic dark fantasy schoolyard vibe with cursed sports-storage energy
+- subtle eerie rim light
+- muted metal and cricket-ball colors with eerie red highlights
+- comical, expressive, not horror
+- readable at small UI size
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+- no scenery
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  IDLE, SPINUP, BREAKDOWN
+- 4 columns:
+  animation frames 1, 2, 3, 4
+- consistent head size or portrait mass size
+- centered portrait
+- fixed head and shoulder anchor, or fixed base anchor for machine and boss portraits
+- same scale in every frame
+
+---
+
+ANIMATION:
+- IDLE row: tiny mechanical vibration, hopper barely shifts, standby pose
+- SPINUP row: wheels or internal parts blur slightly, casing shakes, ball moves into chute
+- BREAKDOWN row: casing dips, tiny sparks, cricket balls wobble
+
+---
+
+OUTPUT:
+- one portrait sprite sheet
+- no text
+- no UI
+- no labels
+- chroma green background only

@@ -1,0 +1,83 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+This sheet must contain exactly 3 direction rows: NORTH, NORTH-EAST, EAST.
+Do not omit, merge, replace, or relabel any direction.
+
+- NORTH (row 1): full back view, no face visible, back of apron, hairnet or canteen cap, and pie tray visible
+- NORTH-EAST (row 2): back-right angle, mostly back visible, slight right turn, no clear face
+- EAST (row 3): full right-side profile, only one eye or profile detail visible, body sideways, pie tray, oven mitt, and sauce bottle visible in profile
+
+If face is visible in NORTH -> incorrect
+If body is not clearly angled in NE -> incorrect
+If EAST looks front-facing -> incorrect
+
+---
+
+CHARACTER:
+Tuckshop Lady faculty healer unit
+- no-nonsense Australian school canteen worker
+- white apron
+- hairnet or canteen cap
+- practical shirt and skirt or pants
+- sensible shoes
+- oven mitt or serving glove
+- tray of hot meat pies
+- tiny sauce bottle tucked into apron
+- looks kind but terrifyingly strict about sauce costing extra
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe with cursed canteen-window energy
+- warm pie colors with eerie cafeteria highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  NORTH, NORTH-EAST, EAST
+- 3 columns:
+  1. idle pose
+  2. subtle motion
+  3. return to idle
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot or base anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+IDLE animation
+- stands behind an invisible canteen counter posture with pie tray ready
+- pie steam rises slightly, apron shifts, calm blink
+- returns to warm but strict service stance
+- no readable text
+- no UI elements
+- effects must stay inside the frame slots
+
+---
+
+OUTPUT:
+- one sprite sheet
+- exactly 3 direction rows and 3 animation columns
+- no text
+- no UI
+- directions must be correct

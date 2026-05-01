@@ -1,0 +1,63 @@
+{
+  "frame_size": 88,
+  "directions": [
+    "south",
+    "south-east",
+    "east",
+    "north-east",
+    "north"
+  ],
+  "animations": {
+    "defeat": {
+      "south": 3,
+      "south-east": 3,
+      "east": 3,
+      "north-east": 3,
+      "north": 3
+    },
+    "command": {
+      "south": 3,
+      "south-east": 3,
+      "east": 3,
+      "north-east": 3,
+      "north": 3
+    },
+    "walk": {
+      "south": 3,
+      "south-east": 3,
+      "east": 3,
+      "north-east": 3,
+      "north": 3
+    },
+    "attack": {
+      "south": 3,
+      "south-east": 3,
+      "east": 3,
+      "north-east": 3,
+      "north": 3
+    },
+    "charge": {
+      "south": 3,
+      "south-east": 3,
+      "east": 3,
+      "north-east": 3,
+      "north": 3
+    },
+    "idle": {
+      "south": 3,
+      "south-east": 3,
+      "east": 3,
+      "north-east": 3,
+      "north": 3
+    }
+  },
+  "sources": {
+    "defeat": "D:\\jmbow1\\My Documents\\Downloads\\ChatGPT Image Apr 27, 2026, 10_57_13 AM.png",
+    "command": "D:\\jmbow1\\My Documents\\Downloads\\ChatGPT Image Apr 27, 2026, 10_57_21 AM.png",
+    "walk": "D:\\jmbow1\\My Documents\\Downloads\\ChatGPT Image Apr 27, 2026, 10_57_30 AM.png",
+    "attack": "D:\\jmbow1\\My Documents\\Downloads\\ChatGPT Image Apr 27, 2026, 10_57_47 AM.png",
+    "charge": "D:\\jmbow1\\My Documents\\Downloads\\ChatGPT Image Apr 27, 2026, 10_57_53 AM.png",
+    "idle": "D:\\jmbow1\\My Documents\\Downloads\\ChatGPT Image Apr 27, 2026, 10_58_13 AM.png"
+  },
+  "review_status": "needs visual approval before runtime use"
+}

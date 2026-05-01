@@ -1,0 +1,80 @@
+Create a production-ready 2D pixel-art animated portrait sprite sheet for an isometric RTS game UI.
+
+CHARACTER:
+Substitute Teacher faculty melee unit
+- exhausted relief teacher
+- worn beige cardigan over collared shirt
+- messy hair
+- tired eyes with heavy under-eye marks
+- crooked lanyard with keys
+- rolled lesson folder, clipboard, or emergency DVD case visible near the bottom
+- expression should be funny, dry, and completely out of patience
+
+---
+
+PERSONALITY:
+- has no idea what the lesson plan is
+- came prepared to put on a DVD and survive the day
+- cheap, disposable early defense energy
+- expression says: "Nobody told me about this class."
+
+---
+
+STYLE:
+- pixel-art RTS unit portrait
+- late-90s pre-rendered look
+- crisp readable pixels
+- gothic dark fantasy schoolyard vibe
+- cursed relief-teacher energy
+- subtle eerie rim light
+- muted cardigan and school-office colors
+- comical, expressive, not horror
+- readable at small UI size
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+- no scenery
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  IDLE, TALK, STRESSED
+- 4 columns:
+  animation frames 1, 2, 3, 4
+- consistent head size
+- centered portrait
+- fixed head and shoulder anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+IDLE row:
+- slow blink
+- tiny shoulder slump
+- lanyard barely moving
+
+TALK row:
+- mouth movement
+- one eyebrow twitching
+- folder or DVD case lifted slightly like a hopeless lesson plan
+
+STRESSED row:
+- eyes wider
+- jaw clenched
+- papers shake slightly
+- expression of controlled staffroom despair
+
+---
+
+OUTPUT:
+- one portrait sprite sheet
+- no text
+- no UI
+- no labels
+- chroma green background only

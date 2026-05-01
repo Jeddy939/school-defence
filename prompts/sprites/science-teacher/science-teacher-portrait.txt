@@ -1,0 +1,79 @@
+Create a production-ready 2D pixel-art animated portrait sprite sheet for an isometric RTS game UI.
+
+CHARACTER:
+Science Teacher faculty area-of-effect ranged unit
+- chaotic Australian science teacher
+- white lab coat
+- crooked safety goggles
+- messy slightly singed hair
+- rubber gloves
+- stained sleeves
+- glowing chemical flask visible near the bottom
+- delighted, twitchy, sleep-deprived expression
+
+---
+
+PERSONALITY:
+- has not updated the safety manual since 1998
+- treats every explosion as a learning opportunity
+- expression says: "This is probably curriculum-aligned."
+
+---
+
+STYLE:
+- pixel-art RTS unit portrait
+- late-90s pre-rendered look
+- crisp readable pixels
+- gothic dark fantasy schoolyard vibe
+- cursed science-lab energy
+- subtle eerie green chemical rim light
+- muted lab colors
+- comical, expressive, not horror
+- readable at small UI size
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+- no scenery
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  IDLE, EXPLAIN, EXCITED
+- 4 columns:
+  animation frames 1, 2, 3, 4
+- consistent head size
+- centered portrait
+- fixed head and shoulder anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+IDLE row:
+- flask bubbles gently
+- tiny goggle wobble
+- slow blink
+
+EXPLAIN row:
+- mouth movement
+- one gloved finger lifted
+- flask swirls slightly
+
+EXCITED row:
+- eyes widen
+- grin grows
+- tiny harmless chemical puff
+
+---
+
+OUTPUT:
+- one portrait sprite sheet
+- no text
+- no UI
+- no labels
+- chroma green background only

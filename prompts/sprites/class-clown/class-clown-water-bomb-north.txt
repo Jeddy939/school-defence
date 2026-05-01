@@ -1,0 +1,80 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- NORTH (row 1): full back view, no face visible, back of messy uniform visible, clown nose not visible from front
+- NORTH-EAST (row 2): back-right angle, mostly back visible, slight right turn, no clear face
+- EAST (row 3): full right-side profile, only one eye visible, body sideways, water bomb visible in throwing hand
+
+If face is visible in NORTH -> incorrect
+If body is not clearly angled in NE -> incorrect
+If EAST looks front-facing -> incorrect
+
+---
+
+CHARACTER:
+Class Clown enemy disruptor
+- school student dressed like a troublemaker
+- untucked uniform
+- crooked tie or loose shirt
+- tiny red clown nose where visible
+- messy hair
+- pockets full of prank items
+- holds a blue water bomb
+- theatrical posture
+- looks like disruptive behavior is their love language
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- cursed assembly-prank energy
+- muted school colors with bright clown and water highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  NORTH, NORTH-EAST, EAST
+- 3 columns:
+  1. wind-up with water bomb
+  2. throw release
+  3. recovery laugh
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Water bomb stun attack
+- frame 1: winds up with blue water bomb
+- frame 2: throws water bomb with a compact blue splash trail
+- frame 3: recovers with theatrical giggle posture
+- attack should read as a stun or disruption, not damage
+- no realistic injury
+- effects stay inside the frame
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

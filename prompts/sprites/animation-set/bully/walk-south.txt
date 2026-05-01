@@ -1,0 +1,83 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+This sheet must contain exactly 3 direction rows: EAST, SOUTH-EAST, SOUTH.
+Do not omit, merge, replace, or relabel any direction.
+
+- EAST (row 1): full right-side profile, only one eye or profile detail visible, body sideways, heavy arm swing, low bag, and looming profile visible
+- SOUTH-EAST (row 2): front-right angle, chest or front mass partially visible, right shoulder or right side closer to camera, face or front detail slightly turned
+- SOUTH (row 3): full front view, both eyes or centered front detail visible, shoulders or front silhouette symmetrical, broad shoulders, scruffy moustache or stubble, and looming expression visible
+
+If face or front detail is not visible in SOUTH -> incorrect
+If EAST does not read as a full right-side profile -> incorrect
+If SE looks side-on instead of angled -> incorrect
+If SOUTH does not read as a full front view -> incorrect
+
+---
+
+CHARACTER:
+The Bully student heavy hitter enemy
+- huge older-looking school student
+- stretched school shirt or dark hoodie over uniform
+- dark pants or shorts
+- heavy shoes
+- rough school bag slung low
+- scruffy moustache or stubble only visible where direction allows
+- broad shoulders and looming posture
+- looks like they have been in Year 10 for three years
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe with cursed back-of-the-bike-sheds energy
+- muted school colors with eerie corridor-shadow highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  EAST, SOUTH-EAST, SOUTH
+- 3 columns:
+  1. left step
+  2. passing stride
+  3. right step
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot or base anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+WALK animation
+- slow heavy corridor stomp
+- shoulders sway, bag swings low, feet plant with weight
+- loop must feel high-health and hard to move
+- no readable text
+- no UI elements
+- effects must stay inside the frame slots
+
+---
+
+OUTPUT:
+- one sprite sheet
+- exactly 3 direction rows and 3 animation columns
+- no text
+- no UI
+- directions must be correct

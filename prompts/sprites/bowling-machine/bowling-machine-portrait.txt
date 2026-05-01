@@ -1,0 +1,78 @@
+Create a production-ready 2D pixel-art animated portrait sprite sheet for an isometric RTS game UI.
+
+CHARACTER:
+Bowling Machine faculty defense tower
+- school cricket bowling machine
+- front chute and ball hopper visible
+- bucket of red cricket balls
+- taped-on warning-label shape with no readable text
+- sturdy wheeled base
+- machine should feel comically intense and pitiless
+
+---
+
+PERSONALITY:
+- set to fast bowler mode
+- does not understand mercy
+- staffroom-approved defensive equipment with unsafe confidence
+- expression equivalent: blank machine menace
+
+---
+
+STYLE:
+- pixel-art RTS unit portrait
+- late-90s pre-rendered look
+- crisp readable pixels
+- gothic dark fantasy schoolyard vibe
+- cursed sports-storage energy
+- subtle eerie rim light
+- muted metal and cricket-ball colors
+- comical, expressive through machine motion, not horror
+- readable at small UI size
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+- no scenery
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  IDLE, SPINUP, FIRING
+- 4 columns:
+  animation frames 1, 2, 3, 4
+- consistent machine size
+- centered portrait
+- fixed base anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+IDLE row:
+- tiny mechanical vibration
+- hopper barely shifts
+- standby pose
+
+SPINUP row:
+- wheels or internal parts blur slightly
+- casing shakes
+- ball moves into chute
+
+FIRING row:
+- compact launch motion
+- small recoil
+- cricket ball streak stays inside portrait frame
+
+---
+
+OUTPUT:
+- one portrait sprite sheet
+- no text
+- no UI
+- no labels
+- chroma green background only

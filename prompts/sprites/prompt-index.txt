@@ -1,0 +1,69 @@
+Sprite prompt folder convention
+===============================
+
+Current automation-ready set:
+- prompts/sprites/animation-set
+
+Use this folder first for sprite generation automation. Each character folder in
+animation-set contains the full gameplay animation set:
+- idle-north.txt
+- idle-south.txt
+- walk-north.txt
+- walk-south.txt
+- attack-north.txt
+- attack-south.txt
+- death-north.txt
+- death-south.txt
+- portrait.txt
+
+The older character folders beside animation-set are earlier one-off prompts.
+They are kept for reference, but automation should prefer animation-set.
+
+Animation-set files use:
+- north prompts: 3-row sheet for NORTH, NORTH-EAST, EAST
+- south prompts: 3-row sheet for EAST, SOUTH-EAST, SOUTH
+- portrait prompts: 3-row portrait animation sheet
+- solid chroma green background (#00FF00)
+- no text, no UI, no labels
+- fixed anchors
+- comedic Schoolyard Defence characterization
+- a gothic dark fantasy schoolyard vibe
+
+Legacy one-off folder convention
+================================
+
+Each older character folder contains three prompt files:
+- north: 3-row sheet for NORTH, NORTH-EAST, EAST
+- south: older draft format, kept only for reference
+- portrait: 3-row portrait animation sheet
+
+Do not use legacy one-off folders for automation unless you intentionally want
+the older draft prompts. The current animation-set folder has the clearer
+3-direction sheet requirements.
+
+All gameplay sprite prompts use:
+- solid chroma green background (#00FF00)
+- no text, no UI, no labels
+- fixed bottom-center anchor for gameplay sprites
+- fixed head and shoulder anchor for portraits
+- comedic schoolyard satire with a gothic dark fantasy vibe
+
+Character folders:
+- teacher-aide
+- substitute-teacher
+- pe-teacher
+- maths-teacher
+- science-teacher
+- tuckshop-lady
+- bowling-machine
+- year-7
+- footy-kid
+- bully
+- mean-girl
+- eshay
+- class-clown
+- year-7-rat-king
+
+Notes:
+- Bowling Machine is included because it behaves like a combat entity.
+- Static buildings, lockers, admin, bookshelves, and trees are not included in this character prompt set.

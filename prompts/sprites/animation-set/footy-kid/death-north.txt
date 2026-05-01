@@ -1,0 +1,84 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+This sheet must contain exactly 3 direction rows: NORTH, NORTH-EAST, EAST.
+Do not omit, merge, replace, or relabel any direction.
+
+- NORTH (row 1): full back view, no face visible, back of blue and yellow footy jersey and broad shoulders visible
+- NORTH-EAST (row 2): back-right angle, mostly back visible, slight right turn, no clear face
+- EAST (row 3): full right-side profile, only one eye or profile detail visible, body sideways, football tucked under one arm, stocky profile, and boots visible
+
+If face is visible in NORTH -> incorrect
+If body is not clearly angled in NE -> incorrect
+If EAST looks front-facing -> incorrect
+
+---
+
+CHARACTER:
+Footy Kid student tank enemy
+- big school sports kid
+- blue and yellow footy jersey with no readable numbers or text
+- navy shorts
+- long socks
+- scuffed boots or sneakers
+- football tucked under one arm
+- mouthguard or cheek stripe where visible
+- stocky build, slow but hard to stop
+- looks like they have practiced a drop punt since birth
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe with cursed lunchtime-footy energy
+- muted sports colors with eerie oval-green highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  NORTH, NORTH-EAST, EAST
+- 3 columns:
+  1. stagger
+  2. collapse or breakdown
+  3. final defeated pose
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot or base anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+DEATH animation
+- cartoon defeat animation, not gore
+- frame 1 stumbles as the football pops loose slightly
+- frame 2 drops to one knee or sits back hard
+- frame 3 slumps beside the football like the siren finally sounded
+- no readable text
+- no UI elements
+- effects must stay inside the frame slots
+
+---
+
+OUTPUT:
+- one sprite sheet
+- exactly 3 direction rows and 3 animation columns
+- no text
+- no UI
+- directions must be correct

@@ -1,0 +1,26 @@
+{
+  "name": "schoolyard-defence-australian-edition",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "chatgpt:sprites": "node scripts/chatgpt_sprite_browser_controller.mjs",
+    "sprites:extract": "py scripts/sprite_extract_agent.py",
+    "sprites:check": "py scripts/sprite_check_agent.py",
+    "sprites:add": "py scripts/sprite_game_agent.py",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "playwright": "^1.59.1",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}

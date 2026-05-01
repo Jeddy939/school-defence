@@ -1,0 +1,79 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- NORTH (row 1): full back view, no clear faces visible, tangled backpacks dominate the rear silhouette
+- NORTH-EAST (row 2): back-right angle, mostly back and side of the tangled mass visible, only partial faces if any
+- EAST (row 3): full right-side profile of the rolling mass, side silhouettes of backpacks and limbs visible
+
+If clear front-facing faces dominate NORTH -> incorrect
+If body mass is not clearly angled in NE -> incorrect
+If EAST looks front-facing -> incorrect
+
+---
+
+CHARACTER:
+The Year 7 Rat King boss enemy
+- giant rolling ball of tangled Year 7 students
+- oversized backpacks knotted together
+- many small school shoes, socks, and sleeves sticking out
+- messy brown hair tufts
+- white shirts and navy shorts repeated through the mass
+- olive-green backpacks form the main silhouette
+- chaotic but funny, like poor locker organization became a boss monster
+- no gore, no injury, just tangled cartoon chaos
+
+---
+
+STYLE:
+- pixel-art RTS boss sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong large silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- cursed backpack-avalanche energy
+- muted school-uniform colors with eerie green backpack highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  NORTH, NORTH-EAST, EAST
+- 3 columns:
+  1. tangled roll wind-up
+  2. slam or spit-out impact
+  3. wobbling recovery
+- consistent spacing
+- centered boss sprites
+- fixed bottom-center ground anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Boss rolling slam and minion spit
+- frame 1: tangled mass squashes back, backpacks tightening
+- frame 2: lurches forward with compact dust burst and one tiny loose Year 7 silhouette popping from the mass
+- frame 3: wobbles back into rolling shape
+- action should read as a boss attack that can spawn loose Year 7s
+- cartoon chaos only, no gore, no realistic injury
+- effects stay inside the frame
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

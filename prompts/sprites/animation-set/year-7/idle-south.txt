@@ -1,0 +1,85 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+This sheet must contain exactly 3 direction rows: EAST, SOUTH-EAST, SOUTH.
+Do not omit, merge, replace, or relabel any direction.
+
+- EAST (row 1): full right-side profile, only one eye or profile detail visible, body sideways, one eye, spiky hair, and huge backpack visible in profile
+- SOUTH-EAST (row 2): front-right angle, chest or front mass partially visible, right shoulder or right side closer to camera, face or front detail slightly turned
+- SOUTH (row 3): full front view, both eyes or centered front detail visible, shoulders or front silhouette symmetrical, angry confused face, untucked shirt, and backpack straps visible
+
+If face or front detail is not visible in SOUTH -> incorrect
+If EAST does not read as a full right-side profile -> incorrect
+If SE looks side-on instead of angled -> incorrect
+If SOUTH does not read as a full front view -> incorrect
+
+---
+
+CHARACTER:
+Year 7 Schoolkid student swarmer enemy
+- tiny chaotic new student
+- messy brown spiky hair
+- white untucked school shirt
+- navy shorts
+- white socks
+- sneakers
+- oversized olive-green backpack bigger than their torso
+- sugar-fueled posture
+- angry and confused expression only visible where appropriate
+- looks like they have no map, no timetable, and unlimited energy
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe with cursed first-day-of-high-school energy
+- muted school-uniform colors with eerie backpack-green highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  EAST, SOUTH-EAST, SOUTH
+- 3 columns:
+  1. idle pose
+  2. subtle motion
+  3. return to idle
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot or base anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+IDLE animation
+- jittery sugar-fueled stance under the huge backpack
+- hair spikes wobble, backpack straps shift, quick blink
+- returns to the same angry confused pose
+- no readable text
+- no UI elements
+- effects must stay inside the frame slots
+
+---
+
+OUTPUT:
+- one sprite sheet
+- exactly 3 direction rows and 3 animation columns
+- no text
+- no UI
+- directions must be correct

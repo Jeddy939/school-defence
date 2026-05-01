@@ -1,0 +1,9 @@
+staffroom-headquarters.png
+administration-office.png
+bookshelf-resource.png
+locker-wall-long.png
+locker-single-star.png
+locker-single-poster.png
+locker-single-paper.png
+locker-double.png
+preview.png

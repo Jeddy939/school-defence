@@ -1,0 +1,79 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- SOUTH-EAST (row 1): front-right angle, chest partially visible, right shoulder closer to camera, face slightly turned
+- SOUTH (row 2): full front view, both eyes visible behind glasses, shoulders symmetrical, chalk visible in hand
+
+If face is not visible in SOUTH -> incorrect
+If SE looks side-on instead of angled -> incorrect
+If SOUTH does not show both eyes -> incorrect
+
+---
+
+CHARACTER:
+Maths Teacher faculty ranged DPS unit
+- precise Australian maths teacher
+- neat but frazzled teacher clothes
+- collared shirt with cardigan or vest
+- sensible pants or skirt
+- glasses
+- lanyard
+- chalk dust on sleeves
+- calculator or ruler clipped to belt
+- holds chalk like a dart
+- stern expression says: "Show your working."
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- cursed geometry-class energy
+- muted classroom colors with eerie chalk highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 2 rows total (top to bottom):
+  SOUTH-EAST, SOUTH
+- 3 columns:
+  1. aim and calculate
+  2. chalk throw release
+  3. recovery stance
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Ranged chalk throw
+- frame 1: raises chalk and aims with mathematical precision
+- frame 2: snaps arm forward, releasing chalk with a tiny chalk-dust streak
+- frame 3: returns to stern ready stance
+- projectile effect must be compact and readable
+- no large effects
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

@@ -1,0 +1,79 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- SOUTH-EAST (row 1): front-right angle, chest partially visible, right shoulder closer to camera, face slightly turned
+- SOUTH (row 2): full front view, both eyes visible, shoulders symmetrical, tote bag or satchel mostly hidden behind body
+
+If face is not visible in SOUTH -> incorrect
+If SE looks side-on instead of angled -> incorrect
+If SOUTH does not show both eyes -> incorrect
+
+---
+
+CHARACTER:
+Teacher's Aide faculty worker unit
+- overworked Australian school teacher's aide
+- tired eyes, strained patience, determined expression
+- practical cardigan, slightly worn and oversized
+- collared shirt
+- dark sensible pants
+- practical shoes
+- lanyard with keys
+- messy tied-back hair or short frazzled hair
+- small satchel or tote bag full of forms, folders, and confiscated items
+- carries a clipboard or folder stack close to body
+- looks like the only person in the school who knows how to fix the photocopier
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- slightly cursed staffroom energy
+- muted school-office colors with eerie highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 2 rows total (top to bottom):
+  SOUTH-EAST, SOUTH
+- 5 columns:
+  idle animation frames 1, 2, 3, 4, 5
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Idle worker stance
+- subtle breathing
+- tired blink
+- tiny lanyard/key sway
+- small clipboard or folder adjustment
+- no attack action
+- no large effects
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

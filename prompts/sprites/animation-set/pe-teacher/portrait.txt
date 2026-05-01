@@ -1,0 +1,69 @@
+Create a production-ready 2D pixel-art animated portrait sprite sheet for an isometric RTS game UI.
+
+CHARACTER:
+P.E. Teacher faculty elite melee shock troop
+- bulky Australian sports teacher build
+- school sports polo
+- short shorts or tracksuit pants
+- running shoes
+- whistle on lanyard
+- cap or sun visor
+- zinc sunscreen stripe on nose where visible
+- stopwatch or clipboard at belt
+- looks like they believe every problem can be solved by running a lap
+
+---
+
+PERSONALITY:
+- believes 90 percent of life's problems can be solved by running a lap of the oval
+- intense, competitive, and way too excited about fitness testing
+- expression says: "Drop and give me two laps."
+
+---
+
+STYLE:
+- pixel-art RTS unit portrait
+- late-90s pre-rendered look
+- crisp readable pixels
+- gothic dark fantasy schoolyard vibe
+- gothic dark fantasy schoolyard vibe with cursed oval-at-dawn energy
+- subtle eerie rim light
+- muted sports colors with eerie whistle-metal highlights
+- comical, expressive, not horror
+- readable at small UI size
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+- no scenery
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  IDLE, SHOUT, CHARGE
+- 4 columns:
+  animation frames 1, 2, 3, 4
+- consistent head size or portrait mass size
+- centered portrait
+- fixed head and shoulder anchor, or fixed base anchor for machine and boss portraits
+- same scale in every frame
+
+---
+
+ANIMATION:
+- IDLE row: confident breathing, whistle bob, slight head nod
+- SHOUT row: mouth opens as if yelling across the oval, whistle raised slightly
+- CHARGE row: head dips forward, eyes widen with competitive focus
+
+---
+
+OUTPUT:
+- one portrait sprite sheet
+- no text
+- no UI
+- no labels
+- chroma green background only

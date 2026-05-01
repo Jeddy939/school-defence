@@ -1,0 +1,84 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+This sheet must contain exactly 3 direction rows: EAST, SOUTH-EAST, SOUTH.
+Do not omit, merge, replace, or relabel any direction.
+
+- EAST (row 1): full right-side profile, only one eye or profile detail visible, body sideways, red clown nose, water bomb, and theatrical profile visible
+- SOUTH-EAST (row 2): front-right angle, chest or front mass partially visible, right shoulder or right side closer to camera, face or front detail slightly turned
+- SOUTH (row 3): full front view, both eyes or centered front detail visible, shoulders or front silhouette symmetrical, both eyes, red clown nose, crooked tie, and water bomb visible
+
+If face or front detail is not visible in SOUTH -> incorrect
+If EAST does not read as a full right-side profile -> incorrect
+If SE looks side-on instead of angled -> incorrect
+If SOUTH does not read as a full front view -> incorrect
+
+---
+
+CHARACTER:
+Class Clown student disruptor enemy
+- school student dressed like a troublemaker
+- untucked uniform
+- crooked tie or loose shirt
+- tiny red clown nose where visible
+- messy hair
+- pockets full of prank items
+- holds a blue water bomb
+- theatrical posture
+- looks like disruptive behavior is their love language
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe with cursed assembly-prank energy
+- muted school colors with bright clown-red and water-blue highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  EAST, SOUTH-EAST, SOUTH
+- 3 columns:
+  1. idle pose
+  2. subtle motion
+  3. return to idle
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot or base anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+IDLE animation
+- bouncy theatrical stance with water bomb hidden or ready
+- clown nose wiggles, shoulders bounce, mischievous blink
+- returns to prank-ready pose
+- no readable text
+- no UI elements
+- effects must stay inside the frame slots
+
+---
+
+OUTPUT:
+- one sprite sheet
+- exactly 3 direction rows and 3 animation columns
+- no text
+- no UI
+- directions must be correct

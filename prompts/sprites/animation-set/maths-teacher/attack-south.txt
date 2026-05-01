@@ -1,0 +1,86 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+This sheet must contain exactly 3 direction rows: EAST, SOUTH-EAST, SOUTH.
+Do not omit, merge, replace, or relabel any direction.
+
+- EAST (row 1): full right-side profile, only one eye or profile detail visible, body sideways, glasses lens, chalk hand, calculator or ruler visible in profile
+- SOUTH-EAST (row 2): front-right angle, chest or front mass partially visible, right shoulder or right side closer to camera, face or front detail slightly turned
+- SOUTH (row 3): full front view, both eyes or centered front detail visible, shoulders or front silhouette symmetrical, both eyes behind glasses, stern face, chalk, and calculator or ruler visible
+
+If face or front detail is not visible in SOUTH -> incorrect
+If EAST does not read as a full right-side profile -> incorrect
+If SE looks side-on instead of angled -> incorrect
+If SOUTH does not read as a full front view -> incorrect
+
+---
+
+CHARACTER:
+Maths Teacher faculty ranged DPS unit
+- precise Australian maths teacher
+- neat but frazzled teacher clothes
+- collared shirt with cardigan or vest
+- sensible pants or skirt
+- glasses
+- lanyard
+- chalk dust on sleeves
+- calculator or ruler clipped to belt
+- holds chalk like a dart
+- looks like they calculate chalk trajectories with terrifying accuracy
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe with cursed geometry-class energy
+- muted classroom colors with eerie chalk-white highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  EAST, SOUTH-EAST, SOUTH
+- 3 columns:
+  1. wind-up
+  2. impact or release
+  3. recovery
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot or base anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+ATTACK animation
+- ranged chalk throw
+- frame 1 raises chalk and aims with mathematical precision
+- frame 2 snaps arm forward, releasing chalk with a tiny chalk-dust streak
+- frame 3 returns to stern ready stance
+- no readable text
+- no UI elements
+- effects must stay inside the frame slots
+
+---
+
+OUTPUT:
+- one sprite sheet
+- exactly 3 direction rows and 3 animation columns
+- no text
+- no UI
+- directions must be correct

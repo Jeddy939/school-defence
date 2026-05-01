@@ -1,0 +1,79 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- SOUTH-EAST (row 1): front-right angle, chest partially visible, right shoulder closer to camera, face slightly turned
+- SOUTH (row 2): full front view, both eyes visible, shoulders symmetrical, apron and pie tray clearly visible
+
+If face is not visible in SOUTH -> incorrect
+If SE looks side-on instead of angled -> incorrect
+If SOUTH does not show both eyes -> incorrect
+
+---
+
+CHARACTER:
+Tuckshop Lady faculty healer unit
+- no-nonsense Australian school canteen worker
+- white apron
+- hairnet or canteen cap
+- practical shirt and skirt or pants
+- sensible shoes
+- oven mitt or serving glove
+- tray of hot meat pies
+- tiny sauce bottle tucked into apron
+- warm but strict expression
+- expression says: "Love, it costs 50 cents for sauce."
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- cursed canteen-window energy
+- warm pie colors with eerie cafeteria highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 2 rows total (top to bottom):
+  SOUTH-EAST, SOUTH
+- 3 columns:
+  1. wind-up with pie
+  2. healing pie toss
+  3. recovery stance
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Healing meat pie throw
+- frame 1: lifts hot meat pie from tray
+- frame 2: tosses pie forward with a small warm healing sparkle
+- frame 3: returns to service stance with tray ready
+- action should read as healing support, not damage
+- keep effects compact and friendly
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

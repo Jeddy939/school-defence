@@ -1,0 +1,62 @@
+{
+  "frame_size": 80,
+  "portrait_frame_size": 128,
+  "directions": [
+    "south",
+    "south-east",
+    "east",
+    "north-east",
+    "north"
+  ],
+  "animations": {
+    "idle": {
+      "south": 3,
+      "south-east": 3,
+      "east": 3,
+      "north-east": 3,
+      "north": 3
+    },
+    "walk": {
+      "south": 3,
+      "south-east": 3,
+      "east": 3,
+      "north-east": 3,
+      "north": 3
+    },
+    "attack": {
+      "south": 3,
+      "south-east": 3,
+      "east": 3,
+      "north-east": 3,
+      "north": 3
+    },
+    "hit": {
+      "south": 3,
+      "south-east": 3,
+      "east": 3,
+      "north-east": 3,
+      "north": 3
+    },
+    "defeat": {
+      "south": 3,
+      "south-east": 3,
+      "east": 3,
+      "north-east": 3,
+      "north": 3
+    }
+  },
+  "portraits": {
+    "idle": 4,
+    "talk": 4,
+    "angry": 4,
+    "hurt": 2
+  },
+  "sources": {
+    "idle": "D:\\jmbow1\\My Documents\\Downloads\\ChatGPT Image Apr 26, 2026, 10_38_53 PM.png",
+    "walk": "D:\\jmbow1\\My Documents\\Downloads\\ChatGPT Image Apr 26, 2026, 10_38_53 PM.png",
+    "attack": "D:\\jmbow1\\My Documents\\Downloads\\ChatGPT Image Apr 26, 2026, 10_39_03 PM.png",
+    "hit": "D:\\jmbow1\\My Documents\\Downloads\\ChatGPT Image Apr 26, 2026, 10_39_15 PM.png",
+    "defeat": "D:\\jmbow1\\My Documents\\Downloads\\ChatGPT Image Apr 26, 2026, 10_39_33 PM.png"
+  },
+  "portrait_source": "D:\\jmbow1\\My Documents\\Downloads\\ChatGPT Image Apr 26, 2026, 10_39_44 PM.png"
+}

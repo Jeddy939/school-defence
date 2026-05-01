@@ -1,0 +1,78 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- SOUTH-EAST (row 1): front-right angle, chest partially visible, right shoulder closer to camera, face slightly turned, phone visible
+- SOUTH (row 2): full front view, both eyes visible, shoulders symmetrical, phone centered or raised
+
+If face is not visible in SOUTH -> incorrect
+If SE looks side-on instead of angled -> incorrect
+If SOUTH does not show both eyes -> incorrect
+
+---
+
+CHARACTER:
+Mean Girl enemy ranged support unit
+- sharp Australian school student
+- neat school uniform with pink accessories
+- perfectly styled hair
+- phone held like a weapon of mass reputation damage
+- small handbag or school bag
+- smug posture
+- confident toxic smile
+- expression says she can ruin your reputation in 30 seconds
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- cursed group-chat energy
+- muted school colors with toxic pink highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 2 rows total (top to bottom):
+  SOUTH-EAST, SOUTH
+- 3 columns:
+  1. gossip wind-up
+  2. phone projectile release
+  3. smug recovery
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Toxic gossip ranged attack
+- frame 1: raises phone and starts typing with smug precision
+- frame 2: releases a compact pink gossip pulse or tiny phone projectile
+- frame 3: returns to smug stance, phone still up
+- attack should read as ranged debuff support
+- no readable text or icons on phone
+- effects stay inside the frame
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

@@ -1,0 +1,71 @@
+Create a production-ready 2D pixel-art animated portrait sprite sheet for an isometric RTS game UI.
+
+CHARACTER:
+Year 7 Schoolkid student swarmer enemy
+- tiny chaotic new student
+- messy brown spiky hair
+- white untucked school shirt
+- navy shorts
+- white socks
+- sneakers
+- oversized olive-green backpack bigger than their torso
+- sugar-fueled posture
+- angry and confused expression only visible where appropriate
+- looks like they have no map, no timetable, and unlimited energy
+
+---
+
+PERSONALITY:
+- fast, weak, and numerous
+- runs on pure sugar and confusion
+- has a backpack bigger than they are
+- expression says: "Where is room B12 and why is everyone yelling?"
+
+---
+
+STYLE:
+- pixel-art RTS unit portrait
+- late-90s pre-rendered look
+- crisp readable pixels
+- gothic dark fantasy schoolyard vibe
+- gothic dark fantasy schoolyard vibe with cursed first-day-of-high-school energy
+- subtle eerie rim light
+- muted school-uniform colors with eerie backpack-green highlights
+- comical, expressive, not horror
+- readable at small UI size
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+- no scenery
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  IDLE, SHOUT, PANIC
+- 4 columns:
+  animation frames 1, 2, 3, 4
+- consistent head size or portrait mass size
+- centered portrait
+- fixed head and shoulder anchor, or fixed base anchor for machine and boss portraits
+- same scale in every frame
+
+---
+
+ANIMATION:
+- IDLE row: jittery blink, backpack straps shift slightly, restless bounce
+- SHOUT row: mouth movement, eyebrows angry, head bobs with sugar-fueled outrage
+- PANIC row: eyes widen, hair spikes wobble, backpack straps shake
+
+---
+
+OUTPUT:
+- one portrait sprite sheet
+- no text
+- no UI
+- no labels
+- chroma green background only

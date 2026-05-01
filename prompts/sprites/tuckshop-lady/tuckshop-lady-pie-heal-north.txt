@@ -1,0 +1,79 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- NORTH (row 1): full back view, no face visible, back of apron and hairnet visible, pie tray visible from behind
+- NORTH-EAST (row 2): back-right angle, mostly back visible, slight right turn, no clear face
+- EAST (row 3): full right-side profile, only one eye visible, body sideways, pie tray and throwing hand visible
+
+If face is visible in NORTH -> incorrect
+If body is not clearly angled in NE -> incorrect
+If EAST looks front-facing -> incorrect
+
+---
+
+CHARACTER:
+Tuckshop Lady faculty healer unit
+- no-nonsense Australian school canteen worker
+- white apron
+- hairnet or canteen cap
+- practical shirt and skirt or pants
+- sensible shoes
+- oven mitt or serving glove
+- tray of hot meat pies
+- tiny sauce bottle tucked into apron
+- looks kind but terrifyingly strict about sauce costing extra
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- cursed canteen-window energy
+- warm pie colors with eerie cafeteria highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  NORTH, NORTH-EAST, EAST
+- 3 columns:
+  1. wind-up with pie
+  2. healing pie toss
+  3. recovery stance
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Healing meat pie throw
+- frame 1: lifts hot meat pie from tray
+- frame 2: tosses pie forward with a small warm healing sparkle
+- frame 3: returns to service stance with tray ready
+- action should read as healing support, not damage
+- keep effects compact and friendly
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

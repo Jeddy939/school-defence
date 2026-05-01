@@ -1,0 +1,77 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- SOUTH-EAST (row 1): front-right angle, front chute partially visible, right side closer to camera
+- SOUTH (row 2): full front view, front chute centered, body symmetrical, hopper visible above
+
+If front chute is not visible in SOUTH -> incorrect
+If SE looks side-on instead of angled -> incorrect
+If SOUTH is not symmetrical -> incorrect
+
+---
+
+CHARACTER:
+Bowling Machine faculty defense tower
+- school cricket bowling machine set to fast bowler mode
+- squat wheeled machine body
+- ball feeder hopper
+- visible spinning wheel or chute
+- taped-on staffroom warning label shape but no readable text
+- bucket of red cricket balls attached or nearby within the sprite
+- looks emotionless, overpowered, and unable to understand pity
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- cursed sports-storage energy
+- muted metal and cricket-ball colors with eerie highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 2 rows total (top to bottom):
+  SOUTH-EAST, SOUTH
+- 3 columns:
+  1. wheel spin-up
+  2. cricket ball fire
+  3. recoil and reset
+- consistent spacing
+- centered sprites
+- fixed bottom-center base anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Rapid cricket ball firing
+- frame 1: feeder wheel spins up, small vibration
+- frame 2: cricket ball launches with a compact motion streak
+- frame 3: machine recoils slightly and resets
+- action should read as a defense tower attack
+- no readable text
+- effects stay inside the frame
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

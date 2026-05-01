@@ -1,0 +1,69 @@
+Create a production-ready 2D pixel-art animated portrait sprite sheet for an isometric RTS game UI.
+
+CHARACTER:
+Year 7 Rat King student boss enemy
+- giant rolling ball of tangled Year 7 students
+- oversized backpacks knotted together
+- many small school shoes, socks, and sleeves sticking out
+- messy brown hair tufts
+- white shirts and navy shorts repeated through the mass
+- olive-green backpacks form the main silhouette
+- chaotic but funny, like poor locker organization became a boss monster
+- no gore, no injury, just tangled cartoon chaos
+
+---
+
+PERSONALITY:
+- boss enemy
+- rolling mass of tangled Year 7 backpacks
+- spits out loose Year 7s when hit
+- expression says: "We all got lost at once."
+
+---
+
+STYLE:
+- pixel-art RTS unit portrait
+- late-90s pre-rendered look
+- crisp readable pixels
+- gothic dark fantasy schoolyard vibe
+- gothic dark fantasy schoolyard vibe with cursed backpack-avalanche energy
+- subtle eerie rim light
+- muted school-uniform colors with eerie backpack-green highlights
+- comical, expressive, not horror
+- readable at small UI size
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+- no scenery
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  IDLE, ROAR, SPIT
+- 4 columns:
+  animation frames 1, 2, 3, 4
+- consistent head size or portrait mass size
+- centered portrait
+- fixed head and shoulder anchor, or fixed base anchor for machine and boss portraits
+- same scale in every frame
+
+---
+
+ANIMATION:
+- IDLE row: tangled backpacks wobble, tiny faces blink asynchronously, straps shift slightly
+- ROAR row: several tiny mouths open in chaotic shouting, mass shakes, hair tufts wobble
+- SPIT row: one tiny Year 7 silhouette pops partly forward from the backpack mass, straps stretch and recoil
+
+---
+
+OUTPUT:
+- one portrait sprite sheet
+- no text
+- no UI
+- no labels
+- chroma green background only

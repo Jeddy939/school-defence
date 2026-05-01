@@ -1,0 +1,84 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+This sheet must contain exactly 3 direction rows: EAST, SOUTH-EAST, SOUTH.
+Do not omit, merge, replace, or relabel any direction.
+
+- EAST (row 1): full right-side profile, only one eye or profile detail visible, body sideways, phone, styled hair, small bag, and smug profile visible
+- SOUTH-EAST (row 2): front-right angle, chest or front mass partially visible, right shoulder or right side closer to camera, face or front detail slightly turned
+- SOUTH (row 3): full front view, both eyes or centered front detail visible, shoulders or front silhouette symmetrical, both eyes, neat uniform, pink accessories, and raised phone visible
+
+If face or front detail is not visible in SOUTH -> incorrect
+If EAST does not read as a full right-side profile -> incorrect
+If SE looks side-on instead of angled -> incorrect
+If SOUTH does not read as a full front view -> incorrect
+
+---
+
+CHARACTER:
+Mean Girl student ranged support enemy
+- sharp Australian school student
+- neat school uniform with pink accessories
+- perfectly styled hair
+- phone held like a weapon of mass reputation damage
+- small handbag or school bag
+- smug posture
+- expression only visible where appropriate
+- looks like she can ruin your reputation before recess ends
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe with cursed group-chat energy
+- muted school colors with toxic pink highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  EAST, SOUTH-EAST, SOUTH
+- 3 columns:
+  1. wind-up
+  2. impact or release
+  3. recovery
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot or base anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+ATTACK animation
+- toxic gossip ranged attack
+- frame 1 raises phone and starts typing with smug precision
+- frame 2 releases a compact pink gossip pulse or tiny phone projectile
+- frame 3 returns to smug stance, phone still up
+- no readable text
+- no UI elements
+- effects must stay inside the frame slots
+
+---
+
+OUTPUT:
+- one sprite sheet
+- exactly 3 direction rows and 3 animation columns
+- no text
+- no UI
+- directions must be correct

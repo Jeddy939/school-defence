@@ -1,0 +1,58 @@
+{
+  "unit": "year-7",
+  "frame_size": 64,
+  "portrait_frame_size": 128,
+  "directions": [
+    "south",
+    "south-east",
+    "east",
+    "north-east",
+    "north"
+  ],
+  "animations": {
+    "attack": {
+      "north": 3,
+      "north-east": 3,
+      "east": 3,
+      "south-east": 3,
+      "south": 3
+    },
+    "death": {
+      "north": 6,
+      "north-east": 6,
+      "east": 6,
+      "south-east": 6,
+      "south": 6
+    },
+    "idle": {
+      "north": 3,
+      "north-east": 3,
+      "east": 3,
+      "south-east": 3,
+      "south": 4
+    },
+    "walk": {
+      "north": 5,
+      "north-east": 5,
+      "east": 4,
+      "south-east": 5,
+      "south": 6
+    }
+  },
+  "portraits": {
+    "idle": 4,
+    "talk": 4,
+    "stressed": 4
+  },
+  "sources": {
+    "attack_north": "D:\\jmbow1\\Desktop\\game projects\\schoolyard defence\\generated\\chatgpt-sprites\\year-7\\raw\\latest-attack-north.png",
+    "attack_south": "D:\\jmbow1\\Desktop\\game projects\\schoolyard defence\\generated\\chatgpt-sprites\\year-7\\raw\\latest-attack-south.png",
+    "death_north": "D:\\jmbow1\\Desktop\\game projects\\schoolyard defence\\generated\\chatgpt-sprites\\year-7\\raw\\latest-death-north.png",
+    "death_south": "D:\\jmbow1\\Desktop\\game projects\\schoolyard defence\\generated\\chatgpt-sprites\\year-7\\raw\\latest-death-south.png",
+    "idle_north": "D:\\jmbow1\\Desktop\\game projects\\schoolyard defence\\generated\\chatgpt-sprites\\year-7\\raw\\latest-idle-north.png",
+    "idle_south": "D:\\jmbow1\\Desktop\\game projects\\schoolyard defence\\generated\\chatgpt-sprites\\year-7\\raw\\latest-idle-south.png",
+    "portrait_sheet": "D:\\jmbow1\\Desktop\\game projects\\schoolyard defence\\generated\\chatgpt-sprites\\year-7\\raw\\latest-portrait.png",
+    "walk_north": "D:\\jmbow1\\Desktop\\game projects\\schoolyard defence\\generated\\chatgpt-sprites\\year-7\\raw\\latest-walk-north.png",
+    "walk_south": "D:\\jmbow1\\Desktop\\game projects\\schoolyard defence\\generated\\chatgpt-sprites\\year-7\\raw\\latest-walk-south.png"
+  }
+}

@@ -1,0 +1,80 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- NORTH (row 1): full back view, no face visible, back of footy jersey visible, shoulders broad from behind
+- NORTH-EAST (row 2): back-right angle, mostly back visible, slight right turn, no clear face
+- EAST (row 3): full right-side profile, only one eye visible, body sideways, football tucked under arm visible in profile
+
+If face is visible in NORTH -> incorrect
+If body is not clearly angled in NE -> incorrect
+If EAST looks front-facing -> incorrect
+
+---
+
+CHARACTER:
+Footy Kid enemy tank
+- big school sports kid
+- blue and yellow footy jersey with no readable numbers or text
+- navy shorts
+- long socks
+- scuffed boots or sneakers
+- football tucked under one arm
+- mouthguard or cheek stripe where visible
+- stocky build, slow but hard to stop
+- looks like they have practiced a drop punt since birth
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- cursed lunchtime-footy energy
+- muted sports colors with eerie rim highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  NORTH, NORTH-EAST, EAST
+- 3 columns:
+  1. tackle wind-up
+  2. shoulder impact
+  3. heavy recovery
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Footy tackle melee attack
+- frame 1: crouches and braces with football tucked in
+- frame 2: lunges into a shoulder tackle with a tiny dust or impact spark
+- frame 3: heavy recovery, still holding the ball
+- attack should feel tanky, slow, and stubborn
+- no realistic violence
+- effects stay inside the frame
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

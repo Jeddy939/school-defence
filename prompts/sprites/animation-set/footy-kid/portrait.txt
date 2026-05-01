@@ -1,0 +1,70 @@
+Create a production-ready 2D pixel-art animated portrait sprite sheet for an isometric RTS game UI.
+
+CHARACTER:
+Footy Kid student tank enemy
+- big school sports kid
+- blue and yellow footy jersey with no readable numbers or text
+- navy shorts
+- long socks
+- scuffed boots or sneakers
+- football tucked under one arm
+- mouthguard or cheek stripe where visible
+- stocky build, slow but hard to stop
+- looks like they have practiced a drop punt since birth
+
+---
+
+PERSONALITY:
+- slower but high health
+- absorbs a lot of damage
+- has practiced a drop punt since birth
+- expression says: "Everything is a tackle drill."
+
+---
+
+STYLE:
+- pixel-art RTS unit portrait
+- late-90s pre-rendered look
+- crisp readable pixels
+- gothic dark fantasy schoolyard vibe
+- gothic dark fantasy schoolyard vibe with cursed lunchtime-footy energy
+- subtle eerie rim light
+- muted sports colors with eerie oval-green highlights
+- comical, expressive, not horror
+- readable at small UI size
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+- no scenery
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  IDLE, CHANT, BRACE
+- 4 columns:
+  animation frames 1, 2, 3, 4
+- consistent head size or portrait mass size
+- centered portrait
+- fixed head and shoulder anchor, or fixed base anchor for machine and boss portraits
+- same scale in every frame
+
+---
+
+ANIMATION:
+- IDLE row: heavy breathing, football shifts slightly, slow blink
+- CHANT row: mouth movement as if calling for the ball, eyebrows intense, head bobs
+- BRACE row: chin tucks down, shoulders rise, expression locks into tackle mode
+
+---
+
+OUTPUT:
+- one portrait sprite sheet
+- no text
+- no UI
+- no labels
+- chroma green background only

@@ -1,0 +1,82 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+This sheet must contain exactly 3 direction rows: NORTH, NORTH-EAST, EAST.
+Do not omit, merge, replace, or relabel any direction.
+
+- NORTH (row 1): full back view, no face visible, rear wheels, back casing, and hopper visible, no front chute dominating
+- NORTH-EAST (row 2): back-right angle, mostly back visible, slight right turn, no clear face
+- EAST (row 3): full right-side profile, only one eye or profile detail visible, body sideways, ball chute, feeder wheel, and wheeled base visible in profile
+
+If face is visible in NORTH -> incorrect
+If body is not clearly angled in NE -> incorrect
+If EAST looks front-facing -> incorrect
+
+---
+
+CHARACTER:
+Bowling Machine faculty defense tower
+- school cricket bowling machine set to fast bowler mode
+- squat wheeled machine body
+- ball feeder hopper
+- visible spinning wheel or chute
+- taped-on staffroom warning label shape but no readable text
+- bucket of red cricket balls attached or nearby within the sprite
+- looks emotionless, overpowered, and unable to understand pity
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe with cursed sports-storage energy
+- muted metal and cricket-ball colors with eerie red highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  NORTH, NORTH-EAST, EAST
+- 3 columns:
+  1. stagger
+  2. collapse or breakdown
+  3. final defeated pose
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot or base anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+DEATH animation
+- cartoon breakdown animation, not explosive gore
+- frame 1 casing shakes and feeder jams
+- frame 2 machine slumps, wheel pops loose, tiny harmless sparks
+- frame 3 broken defense-tower pose with cricket balls spilled nearby
+- no readable text
+- no UI elements
+- effects must stay inside the frame slots
+
+---
+
+OUTPUT:
+- one sprite sheet
+- exactly 3 direction rows and 3 animation columns
+- no text
+- no UI
+- directions must be correct

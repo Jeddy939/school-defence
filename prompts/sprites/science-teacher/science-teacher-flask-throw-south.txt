@@ -1,0 +1,78 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- SOUTH-EAST (row 1): front-right angle, chest partially visible, right shoulder closer to camera, face slightly turned
+- SOUTH (row 2): full front view, both eyes visible through or below goggles, shoulders symmetrical, glowing flask visible
+
+If face is not visible in SOUTH -> incorrect
+If SE looks side-on instead of angled -> incorrect
+If SOUTH does not show both eyes -> incorrect
+
+---
+
+CHARACTER:
+Science Teacher faculty area-of-effect ranged unit
+- chaotic Australian public school science teacher
+- white lab coat over outdated teacher clothes
+- safety goggles worn or pushed up crookedly
+- messy hair with a singed edge
+- rubber gloves
+- stained sleeves
+- pockets full of test tubes and pens
+- holds a glowing chemical flask with unsafe enthusiasm
+- expression says: "Stand back, this is probably curriculum-aligned."
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- cursed science-lab energy
+- muted lab colors with eerie green chemical glow
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 2 rows total (top to bottom):
+  SOUTH-EAST, SOUTH
+- 3 columns:
+  1. wind-up with flask
+  2. flask throw release
+  3. delighted recovery
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Volatile flask throw
+- frame 1: winds up with glowing flask, lab coat shifting
+- frame 2: throws flask with a small compact chemical trail
+- frame 3: returns to delighted ready stance
+- chemical effects stay inside the frame
+- cartoon chemistry only, no gore, no realistic injury
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

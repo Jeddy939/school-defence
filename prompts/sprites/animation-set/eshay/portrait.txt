@@ -1,0 +1,70 @@
+Create a production-ready 2D pixel-art animated portrait sprite sheet for an isometric RTS game UI.
+
+CHARACTER:
+Eshay student fast striker enemy
+- wiry Australian train-station troublemaker student
+- red or dark tracksuit jacket
+- shorts or track pants
+- sneakers
+- cap
+- bum bag worn across chest or waist
+- restless fast posture
+- looks like they are always asking for a spare cigarette at the train station
+- slang energy without readable text
+
+---
+
+PERSONALITY:
+- extremely fast movement and attack speed
+- cheeky, twitchy, and overconfident
+- asks everyone for a spare cigarette at the train station
+- expression says: "Eetswa, lad."
+
+---
+
+STYLE:
+- pixel-art RTS unit portrait
+- late-90s pre-rendered look
+- crisp readable pixels
+- gothic dark fantasy schoolyard vibe
+- gothic dark fantasy schoolyard vibe with cursed train-station-after-school energy
+- subtle eerie rim light
+- muted streetwear colors with eerie red highlights
+- comical, expressive, not horror
+- readable at small UI size
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+- no scenery
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  IDLE, CHATTER, RUSH
+- 4 columns:
+  animation frames 1, 2, 3, 4
+- consistent head size or portrait mass size
+- centered portrait
+- fixed head and shoulder anchor, or fixed base anchor for machine and boss portraits
+- same scale in every frame
+
+---
+
+ANIMATION:
+- IDLE row: fast blink, cap dips slightly, bum bag strap shifts
+- CHATTER row: mouth movement, cocky head tilt, eyebrows bounce
+- RUSH row: eyes sharpen, head leans forward, tiny speed streaks kept close to the face
+
+---
+
+OUTPUT:
+- one portrait sprite sheet
+- no text
+- no UI
+- no labels
+- chroma green background only

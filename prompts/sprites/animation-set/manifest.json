@@ -1,0 +1,212 @@
+{
+  "teacher-aide": {
+    "name": "Teacher's Aide",
+    "role": "faculty worker / gatherer unit",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  },
+  "substitute-teacher": {
+    "name": "Substitute Teacher",
+    "role": "faculty basic melee unit",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  },
+  "pe-teacher": {
+    "name": "P.E. Teacher",
+    "role": "faculty elite melee shock troop",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  },
+  "maths-teacher": {
+    "name": "Maths Teacher",
+    "role": "faculty ranged DPS unit",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  },
+  "science-teacher": {
+    "name": "Science Teacher",
+    "role": "faculty area-of-effect ranged unit",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  },
+  "tuckshop-lady": {
+    "name": "Tuckshop Lady",
+    "role": "faculty healer unit",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  },
+  "bowling-machine": {
+    "name": "Bowling Machine",
+    "role": "faculty defense tower",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  },
+  "year-7": {
+    "name": "Year 7 Schoolkid",
+    "role": "student swarmer enemy",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  },
+  "footy-kid": {
+    "name": "Footy Kid",
+    "role": "student tank enemy",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  },
+  "bully": {
+    "name": "The Bully",
+    "role": "student heavy hitter enemy",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  },
+  "mean-girl": {
+    "name": "Mean Girl",
+    "role": "student ranged support enemy",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  },
+  "eshay": {
+    "name": "Eshay",
+    "role": "student fast striker enemy",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  },
+  "class-clown": {
+    "name": "Class Clown",
+    "role": "student disruptor enemy",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  },
+  "year-7-rat-king": {
+    "name": "Year 7 Rat King",
+    "role": "student boss enemy",
+    "files": [
+      "idle-north.txt",
+      "idle-south.txt",
+      "walk-north.txt",
+      "walk-south.txt",
+      "attack-north.txt",
+      "attack-south.txt",
+      "death-north.txt",
+      "death-south.txt",
+      "portrait.txt"
+    ]
+  }
+}

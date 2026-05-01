@@ -1,0 +1,83 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+This sheet must contain exactly 3 direction rows: NORTH, NORTH-EAST, EAST.
+Do not omit, merge, replace, or relabel any direction.
+
+- NORTH (row 1): full back view, no face visible, broad back, oversized hoodie or stretched uniform, and low school bag visible
+- NORTH-EAST (row 2): back-right angle, mostly back visible, slight right turn, no clear face
+- EAST (row 3): full right-side profile, only one eye or profile detail visible, body sideways, heavy arm swing, low bag, and looming profile visible
+
+If face is visible in NORTH -> incorrect
+If body is not clearly angled in NE -> incorrect
+If EAST looks front-facing -> incorrect
+
+---
+
+CHARACTER:
+The Bully student heavy hitter enemy
+- huge older-looking school student
+- stretched school shirt or dark hoodie over uniform
+- dark pants or shorts
+- heavy shoes
+- rough school bag slung low
+- scruffy moustache or stubble only visible where direction allows
+- broad shoulders and looming posture
+- looks like they have been in Year 10 for three years
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe with cursed back-of-the-bike-sheds energy
+- muted school colors with eerie corridor-shadow highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  NORTH, NORTH-EAST, EAST
+- 3 columns:
+  1. stagger
+  2. collapse or breakdown
+  3. final defeated pose
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot or base anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+DEATH animation
+- cartoon defeat animation, not gore
+- frame 1 staggers backward with shocked pride
+- frame 2 drops to a seated slump as bag slips down
+- frame 3 slumps in defeated corridor-king embarrassment
+- no readable text
+- no UI elements
+- effects must stay inside the frame slots
+
+---
+
+OUTPUT:
+- one sprite sheet
+- exactly 3 direction rows and 3 animation columns
+- no text
+- no UI
+- directions must be correct

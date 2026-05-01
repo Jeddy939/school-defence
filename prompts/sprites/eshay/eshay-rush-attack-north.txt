@@ -1,0 +1,80 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- NORTH (row 1): full back view, no face visible, tracksuit back and cap visible from behind, bum bag strap visible
+- NORTH-EAST (row 2): back-right angle, mostly back visible, slight right turn, no clear face
+- EAST (row 3): full right-side profile, only one eye visible, body sideways, bum bag and fast stride visible in profile
+
+If face is visible in NORTH -> incorrect
+If body is not clearly angled in NE -> incorrect
+If EAST looks front-facing -> incorrect
+
+---
+
+CHARACTER:
+Eshay enemy fast striker
+- wiry Australian train-station troublemaker student
+- red or dark tracksuit jacket
+- shorts or track pants
+- sneakers
+- cap
+- bum bag worn across chest or waist
+- restless fast posture
+- looks like they are always asking for a spare cigarette at the train station
+- slang energy without readable text
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- cursed train-station-after-school energy
+- muted streetwear colors with eerie red highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 3 rows total (top to bottom):
+  NORTH, NORTH-EAST, EAST
+- 3 columns:
+  1. rush wind-up
+  2. fast close-range strike
+  3. twitchy recovery
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Fast striker melee attack
+- frame 1: leans forward into a quick rush
+- frame 2: snaps into a fast close-range bump or swipe with a tiny speed streak
+- frame 3: rebounds into a twitchy ready stance
+- action should feel extremely fast and cheeky
+- no realistic violence
+- effects stay inside the frame
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

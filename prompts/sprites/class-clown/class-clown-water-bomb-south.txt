@@ -1,0 +1,79 @@
+Create a production-ready 2D pixel-art animation sprite sheet for an isometric RTS game.
+
+CAMERA:
+Camera is positioned from the SOUTH (RTS view).
+
+DIRECTION RULES (STRICT):
+- SOUTH-EAST (row 1): front-right angle, chest partially visible, right shoulder closer to camera, face slightly turned, water bomb visible
+- SOUTH (row 2): full front view, both eyes visible, shoulders symmetrical, red clown nose visible
+
+If face is not visible in SOUTH -> incorrect
+If SE looks side-on instead of angled -> incorrect
+If SOUTH does not show both eyes -> incorrect
+
+---
+
+CHARACTER:
+Class Clown enemy disruptor
+- school student dressed like a troublemaker
+- untucked uniform
+- crooked tie or loose shirt
+- tiny red clown nose
+- messy hair
+- pockets full of prank items
+- holds a blue water bomb
+- theatrical grin
+- expression says they will do anything for a laugh
+
+---
+
+STYLE:
+- pixel-art RTS sprite
+- late-90s pre-rendered look
+- crisp readable pixels
+- strong silhouette
+- consistent proportions
+- gothic dark fantasy schoolyard vibe
+- cursed assembly-prank energy
+- muted school colors with bright clown and water highlights
+- comical satire, not horror
+
+---
+
+BACKGROUND:
+- solid bright chroma green (#00FF00)
+- no checkerboard
+- no gradients
+
+---
+
+LAYOUT:
+- 2 rows total (top to bottom):
+  SOUTH-EAST, SOUTH
+- 3 columns:
+  1. wind-up with water bomb
+  2. throw release
+  3. recovery laugh
+- consistent spacing
+- centered sprites
+- fixed bottom-center foot anchor
+- same scale in every frame
+
+---
+
+ANIMATION:
+Water bomb stun attack
+- frame 1: winds up with blue water bomb
+- frame 2: throws water bomb with a compact blue splash trail
+- frame 3: recovers with theatrical giggle posture
+- attack should read as a stun or disruption, not damage
+- no realistic injury
+- effects stay inside the frame
+
+---
+
+OUTPUT:
+- one sprite sheet
+- no text
+- no UI
+- directions must be correct

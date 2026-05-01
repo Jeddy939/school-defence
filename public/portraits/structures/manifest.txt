@@ -1,0 +1,13 @@
+staffroom/headquarters-01.png
+staffroom/headquarters-02.png
+staffroom/headquarters-03.png
+admin-office/office-01.png
+admin-office/office-02.png
+admin-office/office-03.png
+bookshelf/resource-01.png
+bookshelf/resource-02.png
+bookshelf/resource-03.png
+locker/defense-01.png
+locker/defense-02.png
+locker/defense-03.png
+preview.png
