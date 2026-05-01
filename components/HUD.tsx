@@ -232,10 +232,13 @@ const UnitButton: React.FC<{
 
   return (
     <button
-      onClick={onClick}
+      type="button"
+      onClick={() => {
+        if (canAfford) onClick();
+      }}
       onMouseEnter={() => onHover(type)}
       onMouseLeave={onLeave}
-      disabled={!canAfford}
+      aria-disabled={!canAfford}
       className={['rts-command-button has-portrait', !canAfford ? 'is-disabled' : ''].join(' ')}
     >
       {queuedCount > 0 && <strong className="rts-queue-count">{queuedCount}</strong>}
@@ -261,10 +264,13 @@ const BuildButton: React.FC<{
 
   return (
     <button
-      onClick={onClick}
+      type="button"
+      onClick={() => {
+        if (!isLocked) onClick();
+      }}
       onMouseEnter={() => onHover(type)}
       onMouseLeave={onLeave}
-      disabled={isLocked}
+      aria-disabled={isLocked}
       title={UNIT_INFO[type]?.name || type}
       className={['rts-command-button', active ? 'is-active' : '', isLocked ? 'is-disabled' : ''].join(' ')}
     >
@@ -287,6 +293,7 @@ const UpgradeButton: React.FC<{
 
   return (
     <button
+      type="button"
       onClick={() => {
         if (!purchased && canAfford) onClick();
       }}

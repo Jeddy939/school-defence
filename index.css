@@ -300,7 +300,7 @@ canvas {
   height: 132px;
   min-height: 132px;
   padding: 7px;
-  overflow: hidden;
+  overflow: visible;
   border-top: 1px solid rgba(189, 140, 80, 0.34);
   background:
     radial-gradient(circle at 12% 10%, rgba(242, 193, 77, 0.18), transparent 21%),
@@ -704,7 +704,7 @@ canvas {
   cursor: pointer;
 }
 
-.rts-command-button:hover:not(:disabled) {
+.rts-command-button:hover:not(.is-disabled) {
   border-color: rgba(106, 185, 255, 0.72);
   background:
     linear-gradient(180deg, rgba(35, 69, 99, 0.98), rgba(8, 18, 31, 0.98));
