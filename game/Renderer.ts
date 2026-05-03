@@ -683,7 +683,13 @@ export class Renderer {
       ctx.fillStyle = '#baff8d';
       ctx.font = `${Math.max(9, 10 * z)}px monospace`;
       ctx.textAlign = 'center';
-      ctx.fillText('RALLY', end.x, end.y - 14 * z);
+      const rallyTarget = entity.rallyTargetId
+        ? this.engine.entities.find(target => target.id === entity.rallyTargetId)
+        : null;
+      const label = rallyTarget?.type === EntityType.BOOKSHELF || rallyTarget?.type === EntityType.ADMIN_OFFICE
+        ? 'MINE'
+        : 'RALLY';
+      ctx.fillText(label, end.x, end.y - 14 * z);
       ctx.restore();
     });
   }

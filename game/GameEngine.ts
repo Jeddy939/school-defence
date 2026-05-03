@@ -520,6 +520,7 @@ export class GameEngine {
       totalBuildTime: entity.totalBuildTime ?? stats.buildTime ?? 5,
       trainingQueue,
       rallyPoint: entity.rallyPoint ? { x: Number(entity.rallyPoint.x) || 0, y: Number(entity.rallyPoint.y) || 0 } : null,
+      rallyTargetId: entity.rallyTargetId ?? null,
       stunTimer: entity.stunTimer ?? 0
     };
   }
@@ -730,6 +731,7 @@ export class GameEngine {
       totalBuildTime: stats.buildTime || 5,
       trainingQueue: [],
       rallyPoint: null,
+      rallyTargetId: null,
       stunTimer: 0
     };
 
@@ -947,6 +949,37 @@ export class GameEngine {
     return this.getProducerOutputTypes(type).length > 0;
   }
 
+  private isResourceNode(type: EntityType) {
+    return type === EntityType.BOOKSHELF || type === EntityType.ADMIN_OFFICE;
+  }
+
+  private getRallyTarget(producer: Entity): Entity | null {
+    if (!producer.rallyTargetId) return null;
+    return this.entities.find(entity =>
+      entity.id === producer.rallyTargetId &&
+      entity.hp > 0 &&
+      !entity.isHidden &&
+      this.isResourceNode(entity.type)
+    ) || null;
+  }
+
+  private applyRallyOrder(producer: Entity, trainedUnit: Entity) {
+    const rallyTarget = this.getRallyTarget(producer);
+
+    if (trainedUnit.type === EntityType.TEACHER_AIDE && rallyTarget) {
+      trainedUnit.state = UnitState.GATHER_GO;
+      trainedUnit.targetId = rallyTarget.id;
+      trainedUnit.targetPos = null;
+      return;
+    }
+
+    if (producer.rallyPoint) {
+      trainedUnit.state = UnitState.MOVE;
+      trainedUnit.targetPos = { ...producer.rallyPoint };
+      trainedUnit.targetId = null;
+    }
+  }
+
   getProducerOutputTypes(type: EntityType): EntityType[] {
     switch (type) {
       case EntityType.STAFFROOM: return [EntityType.TEACHER_AIDE, EntityType.SUB_TEACHER];
@@ -1095,11 +1128,7 @@ export class GameEngine {
                // Spawn
                const spawnPos = this.findProductionSpawnPos(ent, type);
                const trainedUnit = this.spawnEntity(type, Faction.FACULTY, spawnPos);
-               if (ent.rallyPoint) {
-                   trainedUnit.state = UnitState.MOVE;
-                   trainedUnit.targetPos = { ...ent.rallyPoint };
-                   trainedUnit.targetId = null;
-               }
+               this.applyRallyOrder(ent, trainedUnit);
                this.notifyState();
            }
        }
@@ -1884,9 +1913,11 @@ export class GameEngine {
       );
 
       if (selectedProducers.length > 0 && selectedUnits.length === 0) {
-          const rallyPoint = this.clampToMap({ x: wx, y: wy });
+          const rallyTarget = target && this.isResourceNode(target.type) ? target : null;
+          const rallyPoint = rallyTarget ? { ...rallyTarget.pos } : this.clampToMap({ x: wx, y: wy });
           selectedProducers.forEach(producer => {
               producer.rallyPoint = { ...rallyPoint };
+              producer.rallyTargetId = rallyTarget?.id ?? null;
           });
           this.notifyState();
           this.saveGame();

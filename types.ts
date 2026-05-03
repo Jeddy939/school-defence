@@ -167,6 +167,7 @@ export interface Entity {
   totalBuildTime: number; // Seconds required to build
   trainingQueue: QueuedUnit[]; // For buildings producing units
   rallyPoint?: Vector2 | null; // For production buildings
+  rallyTargetId?: number | null; // Resource or entity target for production rally orders
   
   // Debuffs
   stunTimer?: number;
