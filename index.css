@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --bg-night: #07111d;
   --bg-deep: #0d1a2b;
@@ -154,6 +158,7 @@ canvas {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
   touch-action: none;
   user-select: none;
+  image-rendering: pixelated;
 }
 
 .mission-briefing-backdrop {
@@ -932,6 +937,7 @@ canvas {
     margin-top: 5px;
     font-size: 0.74rem;
     line-height: 1.25;
+    max-width: 26ch;
   }
 
   .rts-stat-row {

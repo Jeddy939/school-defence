@@ -7,9 +7,10 @@ import { UnitPortrait } from './UnitPortrait';
 interface Props {
   state: GameState;
   engine: GameEngine;
+  isTouchMode?: boolean;
 }
 
-export const HUD: React.FC<Props> = ({ state, engine }) => {
+export const HUD: React.FC<Props> = ({ state, engine, isTouchMode = false }) => {
   const [hoveredType, setHoveredType] = useState<EntityType | null>(null);
   const [hoveredUpgrade, setHoveredUpgrade] = useState<UpgradeType | null>(null);
 
@@ -116,7 +117,9 @@ export const HUD: React.FC<Props> = ({ state, engine }) => {
               <p>
                 {selectedUnit
                   ? UNIT_INFO[selectedUnit.type]?.description || 'No description available.'
-                  : 'Left click a staff member, student, building, or resource to inspect it.'}
+                  : isTouchMode
+                    ? 'Tap a staff member, student, building, or resource to inspect it.'
+                    : 'Click a staff member, student, building, or resource to inspect it.'}
               </p>
 
               {selectedUnit && (

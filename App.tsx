@@ -9,6 +9,13 @@ import { UnitDiscoveryModal } from './components/UnitDiscoveryModal';
 import { MissionBriefing } from './components/MissionBriefing';
 import { SpriteDebugLab } from './components/SpriteDebugLab';
 
+declare const __SMOKE_TEST__: boolean;
+
+type SmokeTestWindow = Window & {
+  __schoolyardEngine?: GameEngine;
+  __schoolyardStartNormal?: () => void;
+};
+
 const difficultyDescriptions: Record<Difficulty, string> = {
   [Difficulty.EASY]: 'More grants, weaker students',
   [Difficulty.NORMAL]: 'Standard Australian public school experience',
@@ -79,6 +86,23 @@ export default function App() {
     // Check for save
     setHasSave(engineRef.current.hasSave());
 
+  }, []);
+
+  useEffect(() => {
+    if (!__SMOKE_TEST__) return undefined;
+    const smokeWindow = window as SmokeTestWindow;
+    smokeWindow.__schoolyardEngine = engineRef.current;
+    smokeWindow.__schoolyardStartNormal = () => {
+      engineRef.current.resetGame(Difficulty.NORMAL);
+      setGameStarted(true);
+      setShowBriefing(false);
+      engineRef.current.setPaused(false);
+      engineRef.current.centerViewOnStaffroom();
+    };
+    return () => {
+      delete smokeWindow.__schoolyardEngine;
+      delete smokeWindow.__schoolyardStartNormal;
+    };
   }, []);
 
   useEffect(() => {
@@ -246,11 +270,14 @@ export default function App() {
                 <div className="text-xs font-bold uppercase tracking-[0.35em] text-slate-400">Australian Edition</div>
                 <h2 className="mt-2 text-2xl font-bold text-white">Start or Continue</h2>
               </div>
-              {hasSave && !showDifficulty && (
-                <span className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-emerald-200">
-                  Save Ready
-                </span>
-              )}
+              <div className="flex flex-col items-end gap-2">
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Version 2</span>
+                {hasSave && !showDifficulty && (
+                  <span className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-emerald-200">
+                    Save Ready
+                  </span>
+                )}
+              </div>
             </div>
 
             {!showDifficulty ? (
@@ -340,7 +367,7 @@ export default function App() {
         </div>
       </main>
 
-      <HUD state={gameState} engine={engineRef.current} />
+      <HUD state={gameState} engine={engineRef.current} isTouchMode={isTouchMode} />
 
       {gameState.gameOver && (
         <div className="fixed bottom-[196px] left-1/2 z-50 -translate-x-1/2">

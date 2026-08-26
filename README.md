@@ -2,6 +2,8 @@
 
 A browser RTS-defense game where exhausted faculty try to hold the staffroom against escalating waves of chaotic students in an exaggerated Australian public school setting.
 
+Version 2 is the current baseline for the playable release.
+
 ## Pitch
 
 `Schoolyard Defence` is a fast, funny defense game with light RTS controls:

@@ -3,7 +3,10 @@
 
 
 import { GameEngine } from './GameEngine';
-import { TILE_SIZE, COLORS, GRID_W, GRID_H, UNIT_STATS } from '../constants';
+import {
+  TILE_SIZE, COLORS, GRID_W, GRID_H, UNIT_STATS, CANVAS_WIDTH, CANVAS_HEIGHT,
+  ISO_OFFSET_X, ISO_OFFSET_Y, ISO_SCALE_X, ISO_SCALE_Y
+} from '../constants';
 import { Entity, EntityType, Faction, TileType, UnitState, UpgradeType, ResourceType, VisualEffect, Vector2 } from '../types';
 
 type SpriteDirection = 'north' | 'north-east' | 'east' | 'south-east' | 'south';
@@ -14,6 +17,7 @@ export class Renderer {
   ctx: CanvasRenderingContext2D | null = null;
   
   grassPattern: CanvasPattern | null = null;
+  exteriorGrassPattern: CanvasPattern | null = null;
   tileImages: Partial<Record<TileType, HTMLImageElement[]>> = {};
   environmentImages: Map<string, HTMLImageElement> = new Map();
   structureImages: Map<string, HTMLImageElement> = new Map();
@@ -629,20 +633,20 @@ export class Renderer {
     if (!this.ctx) return;
     const ctx = this.ctx;
 
-    // Clear Screen (Black Void)
-    ctx.fillStyle = '#0f172a'; // Dark slate background
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    this.drawGrassBackdrop(ctx);
     this.drawAtmosphere(ctx);
 
     const shake = this.getShakeOffset();
     ctx.save();
     ctx.translate(shake.x, shake.y);
     this.drawIsoMap(ctx);
+    this.drawBoundaryFence(ctx, 'back');
     
     // Calculate occlusions before drawing entities
     this.calculateOcclusions();
     
     this.drawEntities(ctx);
+    this.drawBoundaryFence(ctx, 'front');
     this.drawRallyPointIndicators(ctx);
     this.drawProjectiles(ctx);
     this.drawEffects(ctx);
@@ -703,26 +707,76 @@ export class Renderer {
     };
   }
 
+  drawGrassBackdrop(ctx: CanvasRenderingContext2D) {
+    ctx.fillStyle = '#365f2b';
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+    const grassImage = this.tileImages[TileType.OVAL]?.[0];
+    if (grassImage?.complete && grassImage.naturalWidth > 0 && !this.exteriorGrassPattern) {
+      this.exteriorGrassPattern = ctx.createPattern(grassImage, 'repeat');
+      this.exteriorGrassPattern?.setTransform(new DOMMatrix().scale(
+        TILE_SIZE / grassImage.naturalWidth,
+        TILE_SIZE / grassImage.naturalHeight
+      ));
+    }
+
+    if (this.exteriorGrassPattern) {
+      const worldCorners = [
+        this.engine.screenToWorld(0, 0),
+        this.engine.screenToWorld(CANVAS_WIDTH, 0),
+        this.engine.screenToWorld(CANVAS_WIDTH, CANVAS_HEIGHT),
+        this.engine.screenToWorld(0, CANVAS_HEIGHT)
+      ];
+      const minX = Math.min(...worldCorners.map(point => point.x)) - TILE_SIZE;
+      const maxX = Math.max(...worldCorners.map(point => point.x)) + TILE_SIZE;
+      const minY = Math.min(...worldCorners.map(point => point.y)) - TILE_SIZE;
+      const maxY = Math.max(...worldCorners.map(point => point.y)) + TILE_SIZE;
+      const z = this.engine.zoom;
+
+      ctx.save();
+      ctx.transform(
+        ISO_SCALE_X * z,
+        ISO_SCALE_Y * z,
+        -ISO_SCALE_X * z,
+        ISO_SCALE_Y * z,
+        ISO_OFFSET_X + this.engine.panOffset.x,
+        ISO_OFFSET_Y + this.engine.panOffset.y
+      );
+      ctx.fillStyle = this.exteriorGrassPattern;
+      ctx.fillRect(minX, minY, maxX - minX, maxY - minY);
+      ctx.restore();
+      return;
+    }
+
+    if (!this.grassPattern) return;
+
+    ctx.save();
+    ctx.globalAlpha = 0.16;
+    ctx.fillStyle = this.grassPattern;
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    ctx.restore();
+  }
+
   drawAtmosphere(ctx: CanvasRenderingContext2D) {
-    const skyGlow = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+    const skyGlow = ctx.createLinearGradient(0, 0, 0, CANVAS_HEIGHT);
     skyGlow.addColorStop(0, 'rgba(74, 222, 255, 0.12)');
     skyGlow.addColorStop(0.45, 'rgba(15, 23, 42, 0)');
     skyGlow.addColorStop(1, 'rgba(15, 23, 42, 0.28)');
     ctx.fillStyle = skyGlow;
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     const vignette = ctx.createRadialGradient(
-      ctx.canvas.width / 2,
-      ctx.canvas.height * 0.45,
-      ctx.canvas.width * 0.18,
-      ctx.canvas.width / 2,
-      ctx.canvas.height / 2,
-      ctx.canvas.width * 0.72
+      CANVAS_WIDTH / 2,
+      CANVAS_HEIGHT * 0.45,
+      CANVAS_WIDTH * 0.18,
+      CANVAS_WIDTH / 2,
+      CANVAS_HEIGHT / 2,
+      CANVAS_WIDTH * 0.72
     );
     vignette.addColorStop(0, 'rgba(255,255,255,0)');
     vignette.addColorStop(1, 'rgba(0,0,0,0.32)');
     ctx.fillStyle = vignette;
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   }
   
   calculateOcclusions() {
@@ -931,13 +985,93 @@ export class Renderer {
   // Draw the Diamond Grid
   drawIsoMap(ctx: CanvasRenderingContext2D) {
       // Draw from back to front
-      const thickness = 15 * this.engine.zoom; // Dirt thickness scales with zoom
+      const thickness = 0;
       
       for (let y = 0; y < GRID_H; y++) {
           for (let x = 0; x < GRID_W; x++) {
               this.drawTile(ctx, x, y, thickness);
           }
       }
+  }
+
+  drawBoundaryFence(ctx: CanvasRenderingContext2D, pass: 'back' | 'front') {
+      const mapW = GRID_W * TILE_SIZE;
+      const mapH = GRID_H * TILE_SIZE;
+      const edges = pass === 'back'
+          ? [
+              [{ x: 0, y: 0 }, { x: mapW, y: 0 }],
+              [{ x: 0, y: 0 }, { x: 0, y: mapH }]
+            ]
+          : [
+              [{ x: mapW, y: 0 }, { x: mapW, y: mapH }],
+              [{ x: 0, y: mapH }, { x: mapW, y: mapH }]
+            ];
+
+      edges.forEach(([start, end]) => this.drawFenceEdge(ctx, start, end));
+  }
+
+  drawFenceEdge(ctx: CanvasRenderingContext2D, start: Vector2, end: Vector2) {
+      const segments = Math.max(1, Math.round(Math.hypot(end.x - start.x, end.y - start.y) / TILE_SIZE));
+      const height = 22 * this.engine.zoom;
+
+      ctx.save();
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      for (let index = 0; index < segments; index++) {
+          const t1 = index / segments;
+          const t2 = (index + 1) / segments;
+          const base1 = this.engine.worldToScreen(
+              start.x + (end.x - start.x) * t1,
+              start.y + (end.y - start.y) * t1
+          );
+          const base2 = this.engine.worldToScreen(
+              start.x + (end.x - start.x) * t2,
+              start.y + (end.y - start.y) * t2
+          );
+          const top1 = { x: base1.x, y: base1.y - height };
+          const top2 = { x: base2.x, y: base2.y - height };
+
+          ctx.strokeStyle = 'rgba(9, 18, 20, 0.3)';
+          ctx.lineWidth = Math.max(2, 4 * this.engine.zoom);
+          ctx.beginPath();
+          ctx.moveTo(base1.x + 2 * this.engine.zoom, base1.y + 3 * this.engine.zoom);
+          ctx.lineTo(base2.x + 2 * this.engine.zoom, base2.y + 3 * this.engine.zoom);
+          ctx.stroke();
+
+          ctx.strokeStyle = 'rgba(173, 190, 183, 0.62)';
+          ctx.lineWidth = Math.max(0.75, 1.1 * this.engine.zoom);
+          ctx.beginPath();
+          ctx.moveTo(top1.x, top1.y);
+          ctx.lineTo(base2.x, base2.y);
+          ctx.moveTo(base1.x, base1.y);
+          ctx.lineTo(top2.x, top2.y);
+          ctx.moveTo(top1.x, top1.y);
+          ctx.lineTo(top2.x, top2.y);
+          ctx.stroke();
+
+          ctx.strokeStyle = '#263b3b';
+          ctx.lineWidth = Math.max(2, 3.4 * this.engine.zoom);
+          ctx.beginPath();
+          ctx.moveTo(base1.x, base1.y + 2 * this.engine.zoom);
+          ctx.lineTo(top1.x, top1.y - 3 * this.engine.zoom);
+          ctx.stroke();
+          ctx.strokeStyle = '#9fb2aa';
+          ctx.lineWidth = Math.max(0.8, 1.2 * this.engine.zoom);
+          ctx.beginPath();
+          ctx.moveTo(base1.x, base1.y + 1 * this.engine.zoom);
+          ctx.lineTo(top1.x, top1.y - 3 * this.engine.zoom);
+          ctx.stroke();
+      }
+
+      const finalBase = this.engine.worldToScreen(end.x, end.y);
+      ctx.strokeStyle = '#263b3b';
+      ctx.lineWidth = Math.max(2, 3.4 * this.engine.zoom);
+      ctx.beginPath();
+      ctx.moveTo(finalBase.x, finalBase.y + 2 * this.engine.zoom);
+      ctx.lineTo(finalBase.x, finalBase.y - height - 3 * this.engine.zoom);
+      ctx.stroke();
+      ctx.restore();
   }
 
   traceTileTop(
@@ -1006,7 +1140,7 @@ export class Renderer {
           p1.y
       );
       ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = this.engine.zoom < 1 ? 'medium' : 'low';
+      ctx.imageSmoothingQuality = 'medium';
       ctx.drawImage(image, 0, 0);
       ctx.restore();
   }
@@ -2771,17 +2905,17 @@ export class Renderer {
   drawUIOverlay(ctx: CanvasRenderingContext2D) {
     if (this.engine.state.gameOver) {
       ctx.fillStyle = 'rgba(0,0,0,0.7)';
-      ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
       ctx.fillStyle = '#ef4444';
       ctx.font = '40px monospace';
       ctx.textAlign = 'center';
-      ctx.fillText('SCHOOL CLOSED', ctx.canvas.width/2, ctx.canvas.height/2);
+      ctx.fillText('SCHOOL CLOSED', CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
     } else if (this.engine.state.nextWaveTime <= 10 && !this.engine.paused) {
       const warning = ctx.createLinearGradient(0, 0, 0, 140);
       warning.addColorStop(0, 'rgba(239, 68, 68, 0.22)');
       warning.addColorStop(1, 'rgba(239, 68, 68, 0)');
       ctx.fillStyle = warning;
-      ctx.fillRect(0, 0, ctx.canvas.width, 140);
+      ctx.fillRect(0, 0, CANVAS_WIDTH, 140);
     }
   }
 }

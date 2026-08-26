@@ -98,6 +98,7 @@ export class GameEngine {
   private onStateChange?: (state: GameState) => void;
   private uiRefreshElapsed = 0;
   private uiRefreshRequested = false;
+  private stuckFrames = new Map<number, number>();
 
   constructor() {
     this.initWorld();
@@ -138,6 +139,50 @@ export class GameEngine {
       x: (A + B) / 2,
       y: (B - A) / 2
     };
+  }
+
+  panBy(dx: number, dy: number) {
+      if (!Number.isFinite(dx) || !Number.isFinite(dy)) return;
+      this.panOffset.x += dx;
+      this.panOffset.y += dy;
+      this.constrainCamera();
+  }
+
+  constrainCamera() {
+      if (!Number.isFinite(this.zoom)) this.zoom = 1;
+      this.zoom = Math.min(Math.max(this.zoom, 0.5), 3);
+
+      if (!Number.isFinite(this.panOffset.x) || !Number.isFinite(this.panOffset.y)) {
+          this.panOffset = { x: 0, y: 0 };
+      }
+
+      const mapW = GRID_W * TILE_SIZE;
+      const mapH = GRID_H * TILE_SIZE;
+      const halfWidth = (mapW + mapH) * ISO_SCALE_X * this.zoom / 2;
+      const halfHeight = (mapW + mapH) * ISO_SCALE_Y * this.zoom / 2;
+      const centerWorldX = mapW / 2;
+      const centerWorldY = mapH / 2;
+      const center = this.worldToScreen(centerWorldX, centerWorldY);
+      const viewportInsetX = 72;
+      const viewportInsetY = 64;
+      const nearestVisiblePoint = {
+          x: Math.min(Math.max(center.x, viewportInsetX), CANVAS_WIDTH - viewportInsetX),
+          y: Math.min(Math.max(center.y, viewportInsetY), CANVAS_HEIGHT - viewportInsetY)
+      };
+      const deltaX = center.x - nearestVisiblePoint.x;
+      const deltaY = center.y - nearestVisiblePoint.y;
+      const normalizedDistance = Math.abs(deltaX) / halfWidth + Math.abs(deltaY) / halfHeight;
+      const maximumDistance = 0.82;
+
+      if (normalizedDistance <= maximumDistance) return;
+
+      const scale = maximumDistance / normalizedDistance;
+      const constrainedCenter = {
+          x: nearestVisiblePoint.x + deltaX * scale,
+          y: nearestVisiblePoint.y + deltaY * scale
+      };
+      this.panOffset.x += constrainedCenter.x - center.x;
+      this.panOffset.y += constrainedCenter.y - center.y;
   }
   
   getEntityScreenBounds(ent: Entity): ScreenBounds {
@@ -366,6 +411,7 @@ export class GameEngine {
     this.screenShake = 0;
     this.pendingBuild = null;
     this.autosaveElapsed = 0;
+    this.stuckFrames.clear();
     this.pendingWaveSide = Math.floor(Math.random() * 3) as 0 | 1 | 2;
     this.warningIssuedForWave = 0;
     
@@ -433,11 +479,19 @@ export class GameEngine {
         this.lastId = data.lastId ?? Math.max(0, ...this.entities.map(e => e.id));
         this.lastProjId = data.lastProjId ?? 0;
         this.lastEffectId = data.lastEffectId ?? 0;
-        const shouldCenterView = !data.panOffset;
-        if (data.panOffset) this.panOffset = data.panOffset;
-        if (data.zoom) this.zoom = data.zoom;
+        const hasValidZoom = Number.isFinite(data.zoom);
+        const hasValidPan = !!data.panOffset
+          && Number.isFinite(data.panOffset.x)
+          && Number.isFinite(data.panOffset.y);
+        if (hasValidZoom && hasValidPan) {
+          this.zoom = data.zoom!;
+          this.panOffset = { x: data.panOffset!.x, y: data.panOffset!.y };
+          this.constrainCamera();
+        } else {
+          this.zoom = 1;
+          this.centerViewOnStaffroom();
+        }
         this.pendingWaveSide = data.pendingWaveSide ?? this.pendingWaveSide;
-        if (shouldCenterView) this.centerViewOnStaffroom();
       
         this.projectiles = [];
         this.effects = [];
@@ -470,6 +524,7 @@ export class GameEngine {
 
     try {
       const data = JSON.parse(saveString) as Partial<SaveData>;
+      if (data.version !== SAVE_VERSION) return null;
       const hasEntities = Array.isArray(data.entities) && data.entities.some(entity => entity?.type === EntityType.STAFFROOM);
       const hasState = !!data.state?.resources && Number.isFinite(data.state.resources.grants) && Number.isFinite(data.state.resources.curriculum);
       if (!hasEntities || !hasState) return null;
@@ -830,7 +885,12 @@ export class GameEngine {
 
     // BOSS WAVE
     if (waveIndex === 10) {
-      const boss = this.spawnEntity(EntityType.YEAR_7_RAT_KING, Faction.STUDENTS, { x: mapW + 30, y: mapH / 2 });
+      const bossPos = this.pendingWaveSide === 0
+        ? { x: mapW / 2, y: 20 }
+        : this.pendingWaveSide === 1
+          ? { x: mapW - 20, y: mapH / 2 }
+          : { x: mapW / 2, y: mapH - 20 };
+      const boss = this.spawnEntity(EntityType.YEAR_7_RAT_KING, Faction.STUDENTS, bossPos);
       boss.state = UnitState.CHASE;
       boss.targetId = this.findNearestEnemy(boss)?.id || null;
       this.checkNewDiscovery(EntityType.YEAR_7_RAT_KING);
@@ -853,9 +913,9 @@ export class GameEngine {
       let x = 0, y = 0;
       const offset = (Math.random() - 0.5) * 300;
       
-      if (side === 0) { x = mapW/2 + offset; y = -20; } 
-      if (side === 1) { x = mapW + 20; y = mapH/2 + offset; } 
-      if (side === 2) { x = mapW/2 + offset; y = mapH + 20; } 
+      if (side === 0) { x = mapW/2 + offset; y = 20; }
+      if (side === 1) { x = mapW - 20; y = mapH/2 + offset; }
+      if (side === 2) { x = mapW/2 + offset; y = mapH - 20; }
 
       let type = EntityType.YEAR_7;
       const rand = Math.random();
@@ -1049,8 +1109,7 @@ export class GameEngine {
 
       // Apply Pan
       if (panX !== 0 || panY !== 0) {
-          this.panOffset.x += panX * PAN_SPEED;
-          this.panOffset.y += panY * PAN_SPEED;
+          this.panBy(panX * PAN_SPEED, panY * PAN_SPEED);
       }
     }
 
@@ -1191,7 +1250,7 @@ export class GameEngine {
           this.addScreenShake(4);
         } else if (p.type === 'HOT_PIE') {
             const target = this.entities.find(e => e.id === p.targetId);
-            if (target && target.hp > 0 && !target.isHidden) {
+            if (target && target.faction === Faction.FACULTY && target.hp > 0 && !target.isHidden) {
                  this.applyHealing(target, Math.abs(p.damage));
              }
         } else if (p.type === 'WATER_BOMB') {
@@ -1241,7 +1300,17 @@ export class GameEngine {
        // If stunned, do nothing
        if (ent.state === UnitState.STUNNED) return;
 
-       if (ent.faction !== Faction.NEUTRAL && !this.isWorkerBusy(ent)) {
+       if (ent.type === EntityType.TUCKSHOP_LADY && ent.targetId) {
+           const assignedTarget = this.entities.find(target => target.id === ent.targetId);
+           if (!assignedTarget || assignedTarget.faction !== Faction.FACULTY) {
+               ent.targetId = null;
+               if (ent.state === UnitState.ATTACK || ent.state === UnitState.CHASE) {
+                   ent.state = UnitState.IDLE;
+               }
+           }
+       }
+
+       if (ent.faction !== Faction.NEUTRAL && ent.type !== EntityType.TUCKSHOP_LADY && !this.isWorkerBusy(ent)) {
            if (!ent.targetId) {
                const target = this.findNearestEnemy(ent);
                if (target) {
@@ -1272,7 +1341,7 @@ export class GameEngine {
                        // Resume chase if target moved away?
                        if (ent.faction === Faction.STUDENTS) ent.state = UnitState.CHASE;
                        // Faculty:
-                       if (ent.faction === Faction.FACULTY && ent.type !== EntityType.TEACHER_AIDE && ent.type !== EntityType.TUCKSHOP_LADY) {
+                       if (ent.faction === Faction.FACULTY && ent.type !== EntityType.TEACHER_AIDE) {
                           ent.state = UnitState.CHASE;
                        }
                    }
@@ -1594,10 +1663,29 @@ export class GameEngine {
               ent.facing = steerAngle;
           }
       }
+
+      if (!bestPos) {
+          const stuck = (this.stuckFrames.get(ent.id) ?? 0) + 1;
+          this.stuckFrames.set(ent.id, stuck);
+          const hasAvoidance = Math.abs(avoidance.x) + Math.abs(avoidance.y) > 0.01;
+          const baseAngle = hasAvoidance ? Math.atan2(avoidance.y, avoidance.x) : steerAngle;
+          const spinIndex = Math.floor(stuck / 60) % 8;
+          const slideAngle = baseAngle + spinIndex * (Math.PI / 4);
+          const slideDist = Math.max(ent.speed * dt * 60, 6);
+          const candidate = this.clampToMap({
+              x: ent.pos.x + Math.cos(slideAngle) * slideDist,
+              y: ent.pos.y + Math.sin(slideAngle) * slideDist
+          });
+          if (!this.collidesWithObstacle(ent, candidate, ignoredObstacleId)) {
+              bestPos = candidate;
+              ent.facing = slideAngle;
+          }
+      }
       
       if (bestPos) {
           ent.pos.x = bestPos.x;
           ent.pos.y = bestPos.y;
+          this.stuckFrames.delete(ent.id);
       } else {
           ent.facing = directAngle;
       }
@@ -1717,6 +1805,7 @@ export class GameEngine {
 
       this.panOffset.x = targetScreen.x - (isoX * this.zoom) - ISO_OFFSET_X;
       this.panOffset.y = targetScreen.y - (isoY * this.zoom) - ISO_OFFSET_Y;
+      this.constrainCamera();
   }
 
   handleMouseDown(btn: string, sx: number, sy: number) {
@@ -1753,8 +1842,7 @@ export class GameEngine {
       if (this.isPanning && this.lastPanPos) {
           const dx = sx - this.lastPanPos.x;
           const dy = sy - this.lastPanPos.y;
-          this.panOffset.x += dx;
-          this.panOffset.y += dy;
+          this.panBy(dx, dy);
           this.lastPanPos = { x: sx, y: sy };
       }
   }
@@ -1842,6 +1930,7 @@ export class GameEngine {
 
       this.panOffset.x = mx - (isoX * this.zoom) - ISO_OFFSET_X;
       this.panOffset.y = my - (isoY * this.zoom) - ISO_OFFSET_Y;
+      this.constrainCamera();
   }
 
   getTargetPriority(e: Entity) {
@@ -1934,6 +2023,7 @@ export class GameEngine {
 
           if (target) {
               if (target.faction === Faction.STUDENTS) {
+                  if (ent.type === EntityType.TUCKSHOP_LADY) return;
                   ent.state = UnitState.ATTACK;
                   ent.targetId = target.id;
               } else if (target.isUnderConstruction && ent.type === EntityType.TEACHER_AIDE) {
@@ -1959,6 +2049,22 @@ export class GameEngine {
       if (!this.pendingBuild) return;
       
       const stats = UNIT_STATS[this.pendingBuild];
+      const buildMargin = Math.max(20, (stats.size || 20) + 8);
+      if (
+          wx < buildMargin || wy < buildMargin ||
+          wx > GRID_W * TILE_SIZE - buildMargin ||
+          wy > GRID_H * TILE_SIZE - buildMargin
+      ) return;
+
+      const buildRadius = (stats.size || 20) + 10;
+      const overlapsObstacle = this.entities.some(entity => {
+          if (entity.hp <= 0 || entity.isHidden) return false;
+          if (entity.faction !== Faction.NEUTRAL && !this.isBuilding(entity.type)) return false;
+          const clearance = buildRadius + this.getCollisionRadius(entity) + 4;
+          return Math.hypot(wx - entity.pos.x, wy - entity.pos.y) < clearance;
+      });
+      if (overlapsObstacle) return;
+
       if (this.isBuildUnlocked(this.pendingBuild) && this.canAffordEntity(this.pendingBuild)) {
           this.state.resources.grants -= stats.cost.grants;
           this.state.resources.curriculum -= stats.cost.curriculum;

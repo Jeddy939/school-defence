@@ -16,7 +16,7 @@ export const GameCanvas: React.FC<Props> = ({ engine, inputMode = 'mouse' }) => 
     const canvas = canvasRef.current;
     if (!canvas) return;
     
-    const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
+    const ctx = canvas.getContext('2d', { alpha: false });
     if (!ctx) return;
 
     const renderer = new Renderer(engine);
@@ -39,6 +39,21 @@ export const GameCanvas: React.FC<Props> = ({ engine, inputMode = 'mouse' }) => 
     let pendingTapTimeout: number | null = null;
     let lastPinchDistance: number | null = null;
 
+    let renderPixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    const resizeCanvasForDisplay = () => {
+      renderPixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+      const backingWidth = Math.round(CANVAS_WIDTH * renderPixelRatio);
+      const backingHeight = Math.round(CANVAS_HEIGHT * renderPixelRatio);
+      if (canvas.width !== backingWidth || canvas.height !== backingHeight) {
+        canvas.width = backingWidth;
+        canvas.height = backingHeight;
+      }
+      ctx.setTransform(renderPixelRatio, 0, 0, renderPixelRatio, 0, 0);
+    };
+
+    resizeCanvasForDisplay();
+    window.addEventListener('resize', resizeCanvasForDisplay);
+
     const loop = (timestamp: number) => {
       if (isHidden) {
         lastTime = timestamp;
@@ -53,6 +68,7 @@ export const GameCanvas: React.FC<Props> = ({ engine, inputMode = 'mouse' }) => 
       const safeDt = Math.min(dt, 0.1);
       
       engine.update(safeDt);
+      ctx.setTransform(renderPixelRatio, 0, 0, renderPixelRatio, 0, 0);
       renderer.draw();
       
       animationFrameId = requestAnimationFrame(loop);
@@ -69,8 +85,8 @@ export const GameCanvas: React.FC<Props> = ({ engine, inputMode = 'mouse' }) => 
 
     const getCanvasCoords = (clientX: number, clientY: number) => {
       const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
+      const scaleX = CANVAS_WIDTH / rect.width;
+      const scaleY = CANVAS_HEIGHT / rect.height;
 
       return {
         x: (clientX - rect.left) * scaleX,
@@ -179,8 +195,8 @@ export const GameCanvas: React.FC<Props> = ({ engine, inputMode = 'mouse' }) => 
 
       const touch = e.touches[0];
       const rect = canvas.getBoundingClientRect();
-      const scaleX = canvas.width / rect.width;
-      const scaleY = canvas.height / rect.height;
+      const scaleX = CANVAS_WIDTH / rect.width;
+      const scaleY = CANVAS_HEIGHT / rect.height;
       const frameDx = (touch.clientX - activeTouch.lastClientX) * scaleX;
       const frameDy = (touch.clientY - activeTouch.lastClientY) * scaleY;
       const totalDx = touch.clientX - activeTouch.startClientX;
@@ -191,8 +207,7 @@ export const GameCanvas: React.FC<Props> = ({ engine, inputMode = 'mouse' }) => 
       }
 
       if (activeTouch.moved) {
-        engine.panOffset.x += frameDx;
-        engine.panOffset.y += frameDy;
+        engine.panBy(frameDx, frameDy);
       }
 
       activeTouch.lastClientX = touch.clientX;
@@ -277,6 +292,7 @@ export const GameCanvas: React.FC<Props> = ({ engine, inputMode = 'mouse' }) => 
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', resizeCanvasForDisplay);
       if (pendingTapTimeout !== null) {
         window.clearTimeout(pendingTapTimeout);
       }
