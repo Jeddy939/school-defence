@@ -462,6 +462,37 @@ export class GameEngine {
     localStorage.setItem(SAVE_KEY, JSON.stringify(saveData));
   }
 
+  /**
+   * Inspects the raw saved payload without deleting anything. Incompatible,
+   * corrupt, or malformed saves are preserved on disk so the student's data
+   * is never destroyed by merely visiting the menu or by a failed load.
+   * They are only cleared when the player explicitly starts a new game.
+   */
+  inspectSave(): { status: 'compatible' | 'incompatible' | 'missing' } {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (raw === null) return { status: 'missing' };
+
+    try {
+      const data = JSON.parse(raw) as Partial<SaveData>;
+      if ((data as SaveData).version !== SAVE_VERSION) return { status: 'incompatible' };
+      const hasEntities = Array.isArray(data.entities) && data.entities.some(entity => entity?.type === EntityType.STAFFROOM);
+      const hasState = !!data.state?.resources && Number.isFinite(data.state.resources.grants) && Number.isFinite(data.state.resources.curriculum);
+      return hasEntities && hasState ? { status: 'compatible' } : { status: 'incompatible' };
+    } catch {
+      return { status: 'incompatible' };
+    }
+  }
+
+  /**
+   * Deletes an incompatible/corrupt save. Only ever called from the explicit
+   * "new game" flow, never from the menu or a load attempt.
+   */
+  clearIncompatibleSave() {
+    if (this.inspectSave().status === 'incompatible') {
+      localStorage.removeItem(SAVE_KEY);
+    }
+  }
+
   loadGame() {
     const data = this.parseSaveData(localStorage.getItem(SAVE_KEY));
     if (!data) return false;
@@ -505,18 +536,12 @@ export class GameEngine {
       return true;
     } catch (e) {
       console.error("Failed to load save", e);
-      localStorage.removeItem(SAVE_KEY);
       return false;
     }
   }
 
   hasSave() {
-    const save = this.parseSaveData(localStorage.getItem(SAVE_KEY));
-    if (!save) {
-      localStorage.removeItem(SAVE_KEY);
-      return false;
-    }
-    return true;
+    return this.inspectSave().status === 'compatible';
   }
 
   private parseSaveData(saveString: string | null): SaveData | null {

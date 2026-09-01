@@ -55,9 +55,18 @@ export default function App() {
   const [gameStarted, setGameStarted] = useState(false);
   const [hasSave, setHasSave] = useState(false);
   const [showDifficulty, setShowDifficulty] = useState(false);
+  const [menuIntro, setMenuIntro] = useState(() =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+  const dialogAnchorRef = useRef<'desktop' | 'mobile' | null>(null);
+  const desktopNewGameRef = useRef<HTMLButtonElement>(null);
+  const mobileNewGameRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const firstDifficultyRef = useRef<HTMLButtonElement>(null);
   const [showBriefing, setShowBriefing] = useState(false);
   const [detectedTouchMode, setDetectedTouchMode] = useState(detectTouchMode);
   const [controlMode, setControlMode] = useState<ControlMode>(getSavedControlMode);
+  const [menuNotice, setMenuNotice] = useState<string | null>(null);
   const requestedSpriteDebugMode = new URLSearchParams(window.location.search).has('spriteDebug');
   const [spriteDebugAuthorized] = useState(() => {
     const debugLaunchExpires = Number(sessionStorage.getItem(SPRITE_DEBUG_LAUNCH_KEY) || 0);
@@ -86,6 +95,13 @@ export default function App() {
     // Check for save
     setHasSave(engineRef.current.hasSave());
 
+  }, []);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return undefined;
+    const timer = window.setTimeout(() => setMenuIntro(true), 1500);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -182,6 +198,7 @@ export default function App() {
         engineRef.current.resetGame(difficulty);
       }
     } else {
+      engineRef.current.clearIncompatibleSave();
       engineRef.current.resetGame(difficulty);
     }
     setGameStarted(true);
@@ -206,6 +223,54 @@ export default function App() {
     window.location.reload();
   };
 
+  const handleOpenNewGame = (event: React.MouseEvent<HTMLButtonElement>) => {
+    dialogAnchorRef.current = event.currentTarget.classList.contains('menu-hotspot') ? 'desktop' : 'mobile';
+    setShowDifficulty(true);
+  };
+
+  const handleCloseDifficulty = () => {
+    setShowDifficulty(false);
+  };
+
+  useEffect(() => {
+    if (showDifficulty || !dialogAnchorRef.current) return undefined;
+    const frame = window.requestAnimationFrame(() => {
+      const target = dialogAnchorRef.current === 'desktop' ? desktopNewGameRef.current : mobileNewGameRef.current;
+      target?.focus();
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [showDifficulty]);
+
+  useEffect(() => {
+    if (!showDifficulty) return undefined;
+    firstDifficultyRef.current?.focus();
+    const keyHandler = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        handleCloseDifficulty();
+        return;
+      }
+      if (event.key !== 'Tab' || !dialogRef.current) return;
+      const focusables = Array.from(
+        dialogRef.current.querySelectorAll('button:not(:disabled)')
+      ) as HTMLButtonElement[];
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    window.addEventListener('keydown', keyHandler);
+    return () => {
+      window.removeEventListener('keydown', keyHandler);
+    };
+  }, [showDifficulty]);
+
   if (isSpriteDebugMode) {
     return <SpriteDebugLab />;
   }
@@ -217,129 +282,133 @@ export default function App() {
 
   if (!gameStarted) {
     return (
-      <div className="relative min-h-screen overflow-hidden px-4 py-8 sm:px-6 lg:px-10">
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-[-12%] top-[-6%] h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
-          <div className="absolute bottom-[-10%] right-[-8%] h-80 w-80 rounded-full bg-lime-400/10 blur-3xl" />
-          <div className="absolute inset-x-0 top-[12%] mx-auto h-px max-w-5xl bg-white/10" />
-        </div>
+      <div className="menu-hotspot-root">
+        <span className="menu-test-label" aria-hidden="true">Schoolyard Defence — Australian Edition — VERSION 2</span>
+        <img
+          className="menu-hotspot-art"
+          src="/menu/schoolyard-defence-menu.png"
+          alt="Schoolyard Defence main menu showing the staffroom war table and campaign controls"
+          draggable={false}
+        />
 
-        <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12">
-          <section className="space-y-6">
-            <span className="ink-badge">Oval Defense Strategy</span>
+        {!showDifficulty ? (
+          <div
+            className={`menu-hotspot-stage ${menuIntro ? 'is-ready' : ''}`}
+            inert={!menuIntro}
+          >
+            <button
+              ref={desktopNewGameRef}
+              type="button"
+              onClick={handleOpenNewGame}
+              className="menu-hotspot is-new-game"
+              style={{ left: '73.45%', top: '24.8%', width: '21.4%', height: '18.4%' }}
+              aria-label="New Game"
+            >
+              <span className="sr-only">New Game</span>
+            </button>
 
-            <div className="space-y-4">
-              <h1 className="font-display text-5xl uppercase leading-none text-white sm:text-6xl lg:text-7xl">
-                Schoolyard
-                <span className="mt-2 block text-sky-300">Defence</span>
-              </h1>
-              <p className="max-w-xl text-lg text-slate-200 sm:text-xl">
-                Hold the staffroom together, stretch every grant dollar, and stop the student stampede before the term collapses.
-              </p>
+            {hasSave && (
+              <button
+                type="button"
+                onClick={() => handleStartGame(true)}
+                className="menu-hotspot is-continue"
+                style={{ left: '72.9%', top: '44.0%', width: '22.0%', height: '16.7%' }}
+              >
+                <span className="sr-only">Continue Campaign</span>
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={handleOpenSpriteDebug}
+              className="menu-hotspot is-debug"
+              style={{ left: '72.2%', top: '62.0%', width: '22.7%', height: '17.9%' }}
+            >
+              <span className="sr-only">Sprite Debug Lab</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setMenuNotice('Options are coming in the next briefing.')}
+              className="menu-hotspot is-options"
+              style={{ left: '67.2%', top: '85.5%', width: '6.4%', height: '10.2%' }}
+            >
+              <span className="sr-only">Options</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setMenuNotice('The field manual is still being written.')}
+              className="menu-hotspot is-manual"
+              style={{ left: '74.7%', top: '85.5%', width: '6.4%', height: '10.2%' }}
+            >
+              <span className="sr-only">Manual</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setMenuNotice('Achievements are not available yet.')}
+              className="menu-hotspot is-achievements"
+              style={{ left: '82.2%', top: '85.5%', width: '7.5%', height: '10.2%' }}
+            >
+              <span className="sr-only">Achievements</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setMenuNotice('Close this browser tab to exit.')}
+              className="menu-hotspot is-exit"
+              style={{ left: '91.2%', top: '85.5%', width: '6.1%', height: '10.2%' }}
+            >
+              <span className="sr-only">Exit</span>
+            </button>
+
+            <div className="menu-mobile-actions" aria-label="Main menu actions">
+              <button ref={mobileNewGameRef} type="button" onClick={handleOpenNewGame}>New Game</button>
+              {hasSave && <button type="button" onClick={() => handleStartGame(true)}>Continue</button>}
+              <button type="button" onClick={handleOpenSpriteDebug}>Sprite Debug</button>
+              <button type="button" onClick={() => setMenuNotice('Options are coming in the next briefing.')}>Options</button>
+              <button type="button" onClick={() => setMenuNotice('The field manual is still being written.')}>Manual</button>
+              <button type="button" onClick={() => setMenuNotice('Achievements are not available yet.')}>Achievements</button>
+              <button type="button" onClick={() => setMenuNotice('Close this browser tab to exit.')}>Exit</button>
             </div>
 
-            <div className="flex flex-wrap gap-3 text-sm text-slate-300">
-              <span className="ink-badge">Build departments and defenses</span>
-              <span className="ink-badge">Harvest grants and curriculum</span>
-              <span className="ink-badge">Survive escalating waves</span>
-            </div>
-
-            <div className="glass-panel max-w-2xl rounded-[28px] p-5 sm:p-6">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-[0.3em] text-sky-200/80">
-                    Command Brief
-                  </div>
-                  <p className="mt-3 max-w-lg text-sm leading-6 text-slate-300">
-                    {commandBriefText}
-                  </p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-slate-950/55 px-4 py-3 text-right shadow-lg">
-                  <div className="text-xs uppercase tracking-[0.2em] text-slate-400">Campaign Tagline</div>
-                  <div className="mt-2 max-w-[14rem] text-sm font-medium text-amber-200">
-                    Protect the staffroom. Manage the budget. Survive the students.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="glass-panel rounded-[32px] p-5 sm:p-7">
-            <div className="mb-6 flex items-center justify-between">
-              <div>
-                <div className="text-xs font-bold uppercase tracking-[0.35em] text-slate-400">Australian Edition</div>
-                <h2 className="mt-2 text-2xl font-bold text-white">Start or Continue</h2>
-              </div>
-              <div className="flex flex-col items-end gap-2">
-                <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-400">Version 2</span>
-                {hasSave && !showDifficulty && (
-                  <span className="rounded-full border border-emerald-400/30 bg-emerald-500/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] text-emerald-200">
-                    Save Ready
-                  </span>
-                )}
-              </div>
-            </div>
-
-            {!showDifficulty ? (
-              <div className="space-y-4">
-                {hasSave && (
-                  <button
-                    onClick={() => handleStartGame(true)}
-                    className="arcade-button w-full rounded-2xl border border-emerald-300/20 bg-emerald-600 px-6 py-4 text-left transition hover:-translate-y-0.5 hover:bg-emerald-500"
-                  >
-                    <div className="text-lg font-bold uppercase tracking-[0.18em] text-white">Continue Game</div>
-                    <div className="mt-1 text-sm text-emerald-50/90">Jump back into your last defended campus.</div>
-                  </button>
-                )}
-
-                <button
-                  onClick={() => setShowDifficulty(true)}
-                  className="arcade-button w-full rounded-2xl border border-sky-300/20 bg-sky-600 px-6 py-4 text-left transition hover:-translate-y-0.5 hover:bg-sky-500"
-                >
-                  <div className="text-lg font-bold uppercase tracking-[0.18em] text-white">New Game</div>
-                  <div className="mt-1 text-sm text-sky-50/90">Start fresh and pick the pressure level you want to face.</div>
-                </button>
-
-                <button
-                  onClick={handleOpenSpriteDebug}
-                  className="arcade-button w-full rounded-2xl border border-amber-300/20 bg-amber-600 px-6 py-4 text-left transition hover:-translate-y-0.5 hover:bg-amber-500"
-                >
-                  <div className="text-lg font-bold uppercase tracking-[0.18em] text-white">Sprite Debug Lab</div>
-                  <div className="mt-1 text-sm text-amber-50/90">Inspect unit sprites, directions, actions, mirrored frames, and audit flags.</div>
-                </button>
-              </div>
-            ) : (
-              <div className="animate-fade-in space-y-3">
-                {(Object.values(Difficulty) as Difficulty[]).map((difficulty) => {
-                  const accent =
-                    difficulty === Difficulty.EASY
-                      ? 'border-emerald-300/20 bg-emerald-600 hover:bg-emerald-500'
-                      : difficulty === Difficulty.HARD
-                        ? 'border-rose-300/20 bg-rose-600 hover:bg-rose-500'
-                        : 'border-sky-300/20 bg-sky-600 hover:bg-sky-500';
-
-                  return (
-                    <button
-                      key={difficulty}
-                      onClick={() => handleStartGame(false, difficulty)}
-                      className={`arcade-button w-full rounded-2xl px-5 py-4 text-left transition hover:-translate-y-0.5 ${accent}`}
-                    >
-                      <div className="text-lg font-bold uppercase tracking-[0.18em] text-white">{difficulty}</div>
-                      <div className="mt-1 text-sm text-white/85">{difficultyDescriptions[difficulty]}</div>
-                    </button>
-                  );
-                })}
-
-                <button
-                  onClick={() => setShowDifficulty(false)}
-                  className="mt-2 text-sm font-bold uppercase tracking-[0.18em] text-slate-400 transition hover:text-white"
-                >
-                  Back to menu
-                </button>
+            {menuNotice && (
+              <div className="menu-notice" role="status">
+                <span>{menuNotice}</span>
+                <button type="button" onClick={() => setMenuNotice(null)} aria-label="Dismiss message">×</button>
               </div>
             )}
-          </section>
-        </div>
+          </div>
+        ) : (
+          <div
+            ref={dialogRef}
+            className="menu-difficulty-dossier"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Choose starting difficulty"
+          >
+            <div className="menu-difficulty-header">
+              <span>New Game</span>
+              <span>Australian Edition / Version 2</span>
+            </div>
+            {(Object.values(Difficulty) as Difficulty[]).map((difficulty) => (
+              <button
+                ref={difficulty === Difficulty.EASY ? firstDifficultyRef : undefined}
+                key={difficulty}
+                type="button"
+                onClick={() => handleStartGame(false, difficulty)}
+                className={`menu-difficulty-row ${difficulty.toLowerCase()}`}
+              >
+                <span className="menu-difficulty-name">{difficulty}</span>
+                <span className="menu-difficulty-desc">{difficultyDescriptions[difficulty]}</span>
+              </button>
+            ))}
+            <button type="button" onClick={handleCloseDifficulty} className="menu-difficulty-back">
+              Back to menu
+            </button>
+          </div>
+        )}
       </div>
     );
   }

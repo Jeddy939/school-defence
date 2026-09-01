@@ -520,9 +520,42 @@ try {
     save.version = 3;
     localStorage.setItem('schoolyard_save', JSON.stringify(save));
     const hasSave = engine.hasSave();
-    return { hasSave, remaining: localStorage.getItem('schoolyard_save') };
+    const firstInspect = engine.inspectSave();
+    const preservedAfterInspect = localStorage.getItem('schoolyard_save');
+    engine.loadGame();
+    const preservedAfterFailedLoad = localStorage.getItem('schoolyard_save');
+    return {
+      hasSave,
+      firstInspect,
+      preservedAfterInspect,
+      preservedAfterFailedLoad,
+    };
   });
-  if (schemaRejection.hasSave || schemaRejection.remaining !== null) throw new Error('Schema-3 save was not rejected and removed');
+  if (schemaRejection.hasSave
+    || schemaRejection.firstInspect.status !== 'incompatible'
+    || schemaRejection.preservedAfterInspect === null
+    || schemaRejection.preservedAfterFailedLoad === null) {
+    throw new Error(`Schema-3 save must be rejected but preserved: ${JSON.stringify(schemaRejection)}`);
+  }
+
+  const genericResetPreservesIncompatible = await page.evaluate(() => {
+    const engine = window.__schoolyardEngine;
+    engine.resetGame('NORMAL');
+    return { remaining: localStorage.getItem('schoolyard_save') };
+  });
+  if (genericResetPreservesIncompatible.remaining === null) {
+    throw new Error(`Generic reset must preserve incompatible save: ${JSON.stringify(genericResetPreservesIncompatible)}`);
+  }
+
+  const newGameClearsIncompatible = await page.evaluate(() => {
+    const engine = window.__schoolyardEngine;
+    engine.clearIncompatibleSave();
+    engine.resetGame('NORMAL');
+    return { remaining: localStorage.getItem('schoolyard_save') };
+  });
+  if (newGameClearsIncompatible.remaining !== null) {
+    throw new Error(`Explicit new game must clear incompatible save: ${JSON.stringify(newGameClearsIncompatible)}`);
+  }
 
   const discoveryButton = page.getByRole('button', { name: 'Understood' });
   if (await discoveryButton.isVisible().catch(() => false)) await discoveryButton.click();
