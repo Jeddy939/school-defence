@@ -19,6 +19,17 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      build: {
+        rollupOptions: {
+          // Multi-page build: the warm-up (/) and the follow-up page stay
+          // free of activity code. Only practical-task.html loads the game.
+          input: {
+            main: path.resolve(__dirname, 'index.html'),
+            classroom: path.resolve(__dirname, 'classroom-activity.html'),
+            practical: path.resolve(__dirname, 'practical-task.html'),
+          },
+        },
       }
     };
 });

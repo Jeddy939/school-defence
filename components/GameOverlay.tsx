@@ -12,6 +12,8 @@ interface Props {
   detectedTouchMode: boolean;
   onControlModeChange: (mode: ControlMode) => void;
   onOpenBriefing: () => void;
+  onOpenGuide: () => void;
+  onReplayTutorial: () => void;
   suppressPauseMenu?: boolean;
 }
 
@@ -28,6 +30,8 @@ export const GameOverlay: React.FC<Props> = ({
   detectedTouchMode,
   onControlModeChange,
   onOpenBriefing,
+  onOpenGuide,
+  onReplayTutorial,
   suppressPauseMenu = false
 }) => {
   const [saveLabel, setSaveLabel] = useState('SAVE');
@@ -117,6 +121,18 @@ export const GameOverlay: React.FC<Props> = ({
                     className="arcade-button w-full rounded-2xl border border-white/10 bg-slate-700 py-3 font-bold uppercase tracking-[0.18em] text-slate-200 transition hover:-translate-y-0.5 hover:bg-slate-600"
                   >
                     Mission Briefing
+                  </button>
+                  <button
+                    onClick={onOpenGuide}
+                    className="arcade-button w-full rounded-2xl border border-white/10 bg-slate-700 py-3 font-bold uppercase tracking-[0.18em] text-slate-200 transition hover:-translate-y-0.5 hover:bg-slate-600"
+                  >
+                    Field Guide
+                  </button>
+                  <button
+                    onClick={onReplayTutorial}
+                    className="arcade-button w-full rounded-2xl border border-white/10 bg-slate-700 py-3 font-bold uppercase tracking-[0.18em] text-slate-200 transition hover:-translate-y-0.5 hover:bg-slate-600"
+                  >
+                    How to Play
                   </button>
                   <button
                     onClick={handleRetry}
@@ -230,3 +246,4 @@ export const GameOverlay: React.FC<Props> = ({
     </>
   );
 };
+

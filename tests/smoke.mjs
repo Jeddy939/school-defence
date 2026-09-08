@@ -37,9 +37,10 @@ const startPreview = () => {
   });
   const handleChunk = (chunk) => {
     process.stdout.write(`[server] ${chunk}`);
-    const match = String(chunk).match(/http:\/\/127\.0\.0\.1:(\d+)\//);
-    if (match && !resolvedUrl) {
-      resolvedUrl = `http://127.0.0.1:${match[1]}`;
+    const bareChunk = String(chunk).replace(/\u001b\[[0-9;]*m/g, '');
+    const urlMatch = bareChunk.match(/http:\/\/(?:127\.0\.0\.1|localhost):(\d+)\//);
+    if (urlMatch && !resolvedUrl) {
+      resolvedUrl = `http://127.0.0.1:${urlMatch[1]}`;
       resolveUrl(resolvedUrl);
     }
   };
@@ -53,8 +54,54 @@ const startPreview = () => {
   return { urlReady, close };
 };
 
+const assertNoGameAssets = async (page, label) => {
+  const gameAssetRequests = await page.evaluate(() =>
+    performance.getEntriesByType('resource')
+      .map((entry) => entry.name)
+      .filter((name) =>
+        /(\/menu\/|\/sprites\/|\/structures\/|\/tiles\/|\/portraits\/)/.test(name)
+      )
+  );
+  if (gameAssetRequests.length > 0) {
+    throw new Error(`${label} requested game assets: ${gameAssetRequests.join(', ')}`);
+  }
+};
+
+const assertCleanLearningPage = async (page, label, expectedTitle) => {
+  await page.waitForFunction((title) => document.body.innerText.includes(title), expectedTitle, { timeout: 60000 });
+  const copy = await page.evaluate(() => document.body.innerText);
+  for (const forbidden of ['Schoolyard Defence', 'Protect the staffroom', 'VERSION 2']) {
+    if (copy.includes(forbidden)) throw new Error(`${label} exposes game copy: ${forbidden}`);
+  }
+  await assertNoGameAssets(page, label);
+};
+
 const startNormalGame = async (page, baseUrl) => {
   await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
+  await assertCleanLearningPage(page, 'Landing page', 'School funding maths warm-up');
+
+  const startQuiz = page.getByRole('button', { name: 'Start Quiz' });
+  await startQuiz.waitFor({ state: 'visible', timeout: 60000 });
+  await startQuiz.click();
+  await assertCleanLearningPage(page, 'Review page', 'Warm-up review');
+
+  const continueButton = page.getByRole('button', { name: /Continue to next task/ });
+  await continueButton.waitFor({ state: 'visible', timeout: 60000 });
+  await continueButton.click();
+  await assertCleanLearningPage(page, 'Extension page', 'Budget planning extension');
+
+  const openClassroom = page.getByRole('button', { name: /Open classroom activity/ });
+  await openClassroom.waitFor({ state: 'visible', timeout: 60000 });
+  await openClassroom.click();
+  await assertCleanLearningPage(page, 'Classroom page', 'Classroom follow-up');
+
+  const openPractical = page.getByRole('button', { name: /Open practical task/ });
+  await openPractical.waitFor({ state: 'visible', timeout: 60000 });
+  await Promise.all([
+    page.waitForURL('**/practical-task.html', { timeout: 60000 }),
+    openPractical.click(),
+  ]);
+
   await page.waitForFunction(() => document.body.innerText.includes('VERSION 2'), null, { timeout: 60000 });
   await page.waitForFunction(() => typeof window.__schoolyardStartNormal === 'function', null, { timeout: 60000 });
   await page.waitForLoadState('networkidle', { timeout: 60000 });

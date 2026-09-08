@@ -7,6 +7,8 @@ import { GameOverlay } from './components/GameOverlay';
 import { GameState, EntityType, Difficulty } from './types';
 import { UnitDiscoveryModal } from './components/UnitDiscoveryModal';
 import { MissionBriefing } from './components/MissionBriefing';
+import { FieldGuide } from './components/FieldGuide';
+import { TutorialOverlay, TUTORIAL_DONE_KEY } from './components/TutorialOverlay';
 import { SpriteDebugLab } from './components/SpriteDebugLab';
 
 declare const __SMOKE_TEST__: boolean;
@@ -64,6 +66,8 @@ export default function App() {
   const dialogRef = useRef<HTMLDivElement>(null);
   const firstDifficultyRef = useRef<HTMLButtonElement>(null);
   const [showBriefing, setShowBriefing] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(false);
   const [detectedTouchMode, setDetectedTouchMode] = useState(detectTouchMode);
   const [controlMode, setControlMode] = useState<ControlMode>(getSavedControlMode);
   const [menuNotice, setMenuNotice] = useState<string | null>(null);
@@ -204,8 +208,16 @@ export default function App() {
     setGameStarted(true);
     if (load) {
       setShowBriefing(false);
+      setShowTutorial(false);
       engineRef.current.setPaused(false);
     } else {
+      let offerTutorial = true;
+      try {
+        offerTutorial = !localStorage.getItem(TUTORIAL_DONE_KEY);
+      } catch {
+        offerTutorial = true;
+      }
+      setShowTutorial(offerTutorial);
       setShowBriefing(true);
       engineRef.current.setPaused(true);
       engineRef.current.centerViewOnStaffroom();
@@ -282,6 +294,7 @@ export default function App() {
 
   if (!gameStarted) {
     return (
+      <>
       <div className="menu-hotspot-root">
         <span className="menu-test-label" aria-hidden="true">Schoolyard Defence — Australian Edition — VERSION 2</span>
         <img
@@ -338,7 +351,7 @@ export default function App() {
 
             <button
               type="button"
-              onClick={() => setMenuNotice('The field manual is still being written.')}
+              onClick={() => setShowGuide(true)}
               className="menu-hotspot is-manual"
               style={{ left: '74.7%', top: '85.5%', width: '6.4%', height: '10.2%' }}
             >
@@ -368,7 +381,7 @@ export default function App() {
               {hasSave && <button type="button" onClick={() => handleStartGame(true)}>Continue</button>}
               <button type="button" onClick={handleOpenSpriteDebug}>Sprite Debug</button>
               <button type="button" onClick={() => setMenuNotice('Options are coming in the next briefing.')}>Options</button>
-              <button type="button" onClick={() => setMenuNotice('The field manual is still being written.')}>Manual</button>
+              <button type="button" onClick={() => setShowGuide(true)}>Manual</button>
               <button type="button" onClick={() => setMenuNotice('Achievements are not available yet.')}>Achievements</button>
               <button type="button" onClick={() => setMenuNotice('Close this browser tab to exit.')}>Exit</button>
             </div>
@@ -410,6 +423,8 @@ export default function App() {
           </div>
         )}
       </div>
+      {showGuide && <FieldGuide onClose={() => setShowGuide(false)} />}
+      </>
     );
   }
 
@@ -426,10 +441,19 @@ export default function App() {
               controlMode={controlMode}
               detectedTouchMode={detectedTouchMode}
               onControlModeChange={handleControlModeChange}
-              suppressPauseMenu={showBriefing || !!newDiscovery}
+              suppressPauseMenu={showBriefing || !!newDiscovery || showGuide}
               onOpenBriefing={() => {
                 setShowBriefing(true);
                 engineRef.current.setPaused(true);
+              }}
+              onOpenGuide={() => {
+                setShowGuide(true);
+                engineRef.current.setPaused(true);
+              }}
+              onReplayTutorial={() => {
+                setShowTutorial(false);
+                window.setTimeout(() => setShowTutorial(true), 0);
+                engineRef.current.setPaused(false);
               }}
             />
           </div>
@@ -456,6 +480,24 @@ export default function App() {
         />
       )}
 
+      {showGuide && (
+        <FieldGuide
+          onClose={() => {
+            setShowGuide(false);
+            if (!showBriefing) engineRef.current.setPaused(false);
+          }}
+        />
+      )}
+
+      {gameStarted && showTutorial && !showBriefing && !newDiscovery && !showGuide && (
+        <TutorialOverlay
+          engine={engineRef.current}
+          isTouchMode={isTouchMode}
+          onComplete={() => setShowTutorial(false)}
+          onSkip={() => setShowTutorial(false)}
+        />
+      )}
+
       {showBriefing && !newDiscovery && (
         <MissionBriefing
           isTouchMode={isTouchMode}
@@ -466,3 +508,6 @@ export default function App() {
     </div>
   );
 }
+
+
+
