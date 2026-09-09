@@ -2585,7 +2585,7 @@ canvas {
   outline-offset: 3px;
 }
 
-@media (max-width: 900px), (pointer: coarse) {
+@media (max-width: 900px) {
   .menu-hotspot-root {
     height: 100dvh;
     align-content: start;
