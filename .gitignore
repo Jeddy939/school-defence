@@ -18,6 +18,7 @@ dist-ssr
 # Local generated assets and browser automation state
 generated/
 .playwright-mcp/
+release/
 
 # Editor directories and files
 .vscode/*
